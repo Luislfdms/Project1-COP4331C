@@ -1,86 +1,69 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-.login{
-  max-width: 400px;
-  margin : 0 auto;
-  text-align: center;
-}
-.login label{
-  text-align: left;
-  display: block;
-}
-.login input{
-  width: 100%;
-  padding: 6px 10px;
-  margin: 10px 0;
-  border: 2cap solid #ddd;
-  box-sizing: border-box;
-  display: block;
-}
-.login button{
-  border: 0;
-  padding: 8px;
-  margin: 10px 0;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.signup{
-   max-width: 400px;
-   margin : 0 auto;
-   text-align: center;
- }
- .signup label{
-  text-align: left;
-  display: block;
-}
-.signup input{
-  width: 100%;
-  padding: 6px 10px;
-  margin: 10px 0;
-  border: 2cap solid #ddd;
-  box-sizing: border-box;
-  display: block;
-}
-.signup button{
-  border: 0;
-  padding: 8px;
-  margin: 10px 0;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#root {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+}
+
+.App {
+  margin-top: 3.6em;
+  padding: 1em;
+  text-align: center;
+  background-color: #f7f7f7;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.Navbar {
+  display: flex;
+  background: #84e0ff;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 1.2em;
+  position: fixed;
+  padding: 0 5vw;
+  height: 3em;
+  left: 0;
+  top: 0;
+  right: 0;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+.searchbar {
+  flex-grow: .3;
+}
+.searchbar input {
+  width: 100%;
+  padding: .4em;
+  border: none;
+  box-sizing: border-box;
+  font-size: 1em;
 }
 
-.App-link {
-  color: #61dafb;
+.form {
+  width: 400px;
+  margin: auto;
+  text-align: center;
+  background-color: white;
+  padding: 1em;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form label {
+  text-align: left;
+  display: block;
+}
+.form input {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 2cap solid #ddd;
+  box-sizing: border-box;
+  display: block;
+  font-size: 1em;
+}
+.form button {
+  border: 0;
+  padding: 8px;
+  margin: 10px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  background-color: #e7e7e7;
 }

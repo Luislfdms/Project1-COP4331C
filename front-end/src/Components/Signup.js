@@ -2,7 +2,7 @@ import React from 'react'
 
 function Signup() {
   return (
-    <div className= "signup">
+    <div className="signup form">
           <h2> Enter information to Sign up</h2>
         <label>Username</label>
         <input 

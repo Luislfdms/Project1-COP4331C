@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Login = ()=> {
   return (
-    <div className="login">
+    <div className="login form">
         <h2> Enter information to log-in</h2>
 
         <label>Username</label>
