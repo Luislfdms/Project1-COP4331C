@@ -3,9 +3,9 @@ import { useState } from "react";
 import {useHistory} from "react-router-dom"
 function Signup() {
   const history = useHistory();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [isPending, setIsPending] = useState(false);
+  const [username, setUsername] = useState('');// varieble to get username
+  const [password, setPassword] = useState('');//variable to get password
+  const [isPending, setIsPending] = useState(false);// variable to display is pending message
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,7 +13,7 @@ function Signup() {
 
     setIsPending(true);
 
-    fetch('http://localhost:3000/users/', {
+    fetch('http://localhost:3000/users/', {// ****** need to enter API endpoint in order to post user/pw
       method: 'POST',// tells server that we are sending an object
       headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
     }).then(() => {
