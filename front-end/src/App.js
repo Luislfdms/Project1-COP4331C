@@ -4,6 +4,7 @@ import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Home from './Pages/Home';
 import Navbar from './Components/Navbar';
+import Content from './Pages/Content';
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
             </Route>
             <Route path = "/signup" >
               <Signup />
+            </Route>
+            <Route path = "/content" >
+              <Content />
             </Route>
           </Switch>
         </div>
