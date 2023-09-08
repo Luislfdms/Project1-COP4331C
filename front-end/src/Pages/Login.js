@@ -17,6 +17,8 @@ const Login = ()=> {
             type="text"
             required
             />
+
+          <h3>if you do not currently have an account <a href="/signup"> Click Here </a> to sign up</h3>
     </div>
   );
 }

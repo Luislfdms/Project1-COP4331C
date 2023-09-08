@@ -4,15 +4,16 @@ import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Home from './Pages/Home';
 import Navbar from './Components/Navbar';
-import Content from './Pages/Content';
+import Contacts from './Pages/ContactList';
 
+// default page needs to prompt the user to login or signup
 function App() {
   return (
     <Router>
         <Navbar />
         <div className="App">
           <Switch>
-            <Route exact path = "/">
+          <Route exact path = "/">
               <Home />
             </Route>
             <Route path = "/login" >
@@ -21,8 +22,8 @@ function App() {
             <Route path = "/signup" >
               <Signup />
             </Route>
-            <Route path = "/content" >
-              <Content />
+            <Route path = "/contacts" >
+              <Contacts />
             </Route>
           </Switch>
         </div>
