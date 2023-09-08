@@ -58,7 +58,7 @@
   display: block;
   font-size: 1em;
 }
-.form button {
+button {
   border: 0;
   padding: 8px;
   margin: 10px 0;
@@ -66,4 +66,23 @@
   cursor: pointer;
   font-size: 1em;
   background-color: #e7e7e7;
+}
+button.destructive {
+  color: red;
+  background-color: #ffe7e7;
+}
+
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.contact-preview {
+  background-color: white;
+  width: 400px;
+  margin-bottom: 1em;
+}
+.contact-preview p {
+  font-size: 1.1em;
 }

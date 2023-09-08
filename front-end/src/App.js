@@ -4,7 +4,7 @@ import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Home from './Pages/Home';
 import Navbar from './Components/Navbar';
-import Contacts from './Pages/ContactList';
+import Contacts from './Pages/Contacts';
 
 // default page needs to prompt the user to login or signup
 function App() {
