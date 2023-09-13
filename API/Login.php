@@ -1,63 +1,58 @@
 <?php
+    session_start();
+    
     include "Auxillary.php";
-
-    // Check if the request method is POST
-    if ($_SERVER["REQUEST_METHOD"] == "POST") 
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') 
     {
         // Connect to the database
         $connect = db_connect();
 
-        // Retrieve user input
-        $username = $_POST["user_name"];
-        $password = $_POST["password"];
-        $email = $_POST["email"];
-
-        // Validate input (you can add more validation)
-        if (empty($username) || empty($password))
-        {
-            echo json_encode(["message" => "Please provide all required fields."]);
-            exit();
-        }
-
         // Check for database connection errors
-        if ($connect->connect_error) 
+        if ($connect->connect_error)
         {
             retWithErr("Database connection error.");
         }
 
-        // Check if username or email already exists
-        $sql = "SELECT * FROM users WHERE username = ? OR email = ?";
-        $stmt = $connect->prepare($sql);
-        $stmt->bind_param("ss", $username, $email);
-        $stmt->execute();
-
-        if ($stmt->fetch() != true) 
-        {
-            retWithErr("Username or email does not exist.");
-        }
-
-        // Insert user data into the database
-        $sql = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
-        $stmt = $connect->prepare($sql);
-        $stmt->bind_param("sss", $username, $hashedPassword, $email);
-
-        // Successful insertion
-        if ($stmt->execute()) 
-        {
-            echo ("User registration successful.\n");
-            retWithUserInfo($stmt->insert_id, $username, $hashedPassword, $email);
-            header("Location: Login.php");
-            exit();
-        }
-        
-        // Failed insertion
         else
         {
-            retWithErr("User registration failed.");
-        }
+            // Retrieve user input
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+ 
+            // Query the database for the username to verify if it exists
+            $sql = "SELECT user_id, username, password FROM users WHERE username = ?";
+            $stmt = $connect->prepare($sql);
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-        // Close the database connection
-        $stmt->close();
-        $connect->close();
+            if ($result->num_rows > 0) 
+            {
+                $user_data = $result->fetch_assoc();
+
+                // Verify the hashed password
+                if (password_verify($password, $user_data['password'])) 
+                {
+                    $_SESSION['user_id'] = $user_data['user_id'];
+                    retWithInfo("Login successful. User_ID: $user_data[user_id]");
+                    header("Location: deleteContact.php");
+                }
+
+                else
+                {
+                    retWithErr("Incorrect password.");
+                }
+            } 
+
+            else
+            {
+                retWithErr("User does not exist.");
+            }
+
+            // Close the database connection
+            $stmt->close();
+            $connect->close();
+        }
     }
 ?>

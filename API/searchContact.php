@@ -1,15 +1,7 @@
-<?
+<?php
+    session_start();
+
     include "Auxillary.php";
-
-    $dataInfo = getReqInfo();
-
-    $id = $dataInfo["id"];;
-    $fName = $dataInfo["fName"];
-    $lName = $dataInfo["lName"];
-    $phone = $dataInfo["phone"];
-    $email = $dataInfo["email"];
-    $error = "";
-    $info = "";
 
     $connect = db_connect();
 
