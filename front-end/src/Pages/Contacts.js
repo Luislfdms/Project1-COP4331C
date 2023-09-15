@@ -9,6 +9,21 @@ const Contacts = () => {
     const handleDelete = (id) =>{// deletes item from contact based on specified id
         const newContacts = contacts.filter(contact => contact.id !== id)
         setContacts(newContacts);
+        //need to find a way to post new updated list to database
+    }
+
+    const handleEditContact = () =>{
+
+    }
+    const handleAddContact = () => {
+        fetch('http://localhost:3000/users/', {// ****** need to enter API endpoint in order to post user/pw
+      method: 'POST',// tells server that we are sending an object
+      headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
+    }).then(() => {
+      console.log('new user added');
+      //need to find a way to put added contact in database
+     //history.push('/');// takes us back to home page usin its route
+    })
     }
     
     const fetchUserData = () => {
@@ -30,7 +45,8 @@ const Contacts = () => {
 
     return (  
         <div className="contacts">
-            {contacts && <ContactList contacts = {contacts} title = "All Contacts!" handleDelete={handleDelete}/>}
+            {contacts && <ContactList contacts = {contacts} title = "All Contacts!" handleDelete={handleDelete} handleEdit={handleEditContact}/>}
+            <button onClick={handleAddContact}>Add Contact</button>
         </div>
     );
 }

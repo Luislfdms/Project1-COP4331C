@@ -70,6 +70,7 @@ button {
 button.destructive {
   color: red;
   background-color: #ffe7e7;
+  margin: 5px;
 }
 
 

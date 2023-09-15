@@ -2,6 +2,9 @@ import React from 'react'
 
 const Login = ()=> {
 
+  const handleClick = () => {
+    
+  }
   return (
     <div className="login form">
         <h2> Enter information to log-in</h2>
