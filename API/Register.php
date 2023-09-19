@@ -5,69 +5,72 @@
     // Check if the request method is POST
     if ($_SERVER["REQUEST_METHOD"] == "POST") 
     {
-        // Connect to the database
-        $connect = db_connect();
-
-        // Check for database connection errors
-        if ($connect->connect_error) 
+        // Check if form fields are set
+        if (isset($_POST["user_name"]) && isset($_POST["password"]) && isset($_POST["confirm_password"])) 
         {
-            retWithErr("Database connection error.");
-        }
+            // Connect to the database
+            $connect = db_connect();
 
-        else
-        {
-
-            // Retrieve user input
-            $username = $_POST["user_name"];
-            $password = $_POST["password"];
-            $confirmPassword = $_POST["confirm_password"];
-
-            // Check if passwords match
-            if ($password != $confirmPassword)
+            // Check for database connection errors
+            if ($connect->connect_error) 
             {
-                retWithErr("Passwords do not match.");
+                retWithErr("Database connection error.");
             }
-
+            
             else
             {
+                // Retrieve user input
+                $username = $_POST["user_name"];
+                $password = $_POST["password"];
+                $confirmPassword = $_POST["confirm_password"];
 
-                // Hash the password for security
-                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-                // Check if username already exists
-                $sql = "SELECT * FROM users WHERE username = ?";
-                $stmt = $connect->prepare($sql);
-                $stmt->bind_param("s", $username);
-                $stmt->execute();
-
-                if ($stmt->fetch())
+                // Check if passwords match
+                if ($password != $confirmPassword)
                 {
-                    retWithErr("Username already exists.");
+                    retWithErr("Passwords do not match.");
                 }
 
                 else
                 {
-                    // Insert user data into the database
-                    $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-                    $stmt = $connect->prepare($sql);
-                    $stmt->bind_param("ss", $username, $hashedPassword);
+                    // Hash the password for security
+                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-                    // Successful insertion
-                    if ($stmt->execute())
+                    // Check if username already exists
+                    $sql = "SELECT * FROM users WHERE username = ?";
+                    $stmt = $connect->prepare($sql);
+                    $stmt->bind_param("s", $username);
+                    $stmt->execute();
+
+                    if ($stmt->fetch())
                     {
-                        retWithInfo("User registration successful. User_ID: " . $stmt->insert_id);
+                        retWithErr("Username already exists.");
                     }
-                    
-                    // Failed insertion
+
                     else
                     {
-                        retWithErr("User registration failed.");
-                    }
-                }
+                        $stmt->close();
+                        // Insert user data into the database
+                        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+                        $stmt = $connect->prepare($sql);
+                        $stmt->bind_param("ss", $username, $hashedPassword);
 
-                // Close the database connection
-                $stmt->close();
-                $connect->close();
+                        // Successful insertion
+                        if ($stmt->execute())
+                        {
+                            retWithInfo("User registration successful. User_ID: " . $stmt->insert_id);
+                        }
+
+                        // Failed insertion
+                        else
+                        {
+                            retWithErr("User registration failed.");
+                        }
+                    }
+
+                    // Close the database connection
+                    $stmt->close();
+                    $connect->close();
+                }
             }
         }
     }

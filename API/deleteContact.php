@@ -29,7 +29,15 @@
         else 
         {
             // Retrieve contact ID from the user input
-            $contact_id = $_POST["contact_id"];
+            if (isset($_POST["contact_id"]))
+            {
+                $contact_id = $_POST["contact_id"];
+            }
+                
+            else
+            {
+                retWithErr("Contact ID not provided.");
+            }
 
             // Check if the contact belongs to the logged-in user
             $sql = "SELECT * FROM contacts WHERE contact_id = ? AND user_id = ?";

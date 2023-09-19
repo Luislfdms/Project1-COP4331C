@@ -17,8 +17,16 @@
         else
         {
             // Retrieve user input
-            $username = $_POST['username'];
-            $password = $_POST['password'];
+            if (isset($_POST['username']) && isset($_POST['password']))
+            {
+                $username = $_POST['username'];
+                $password = $_POST['password'];
+            }
+
+            else
+            {
+                retWithErr("Username or password not provided.");
+            }
  
             // Query the database for the username to verify if it exists
             $sql = "SELECT user_id, username, password FROM users WHERE username = ?";
@@ -36,14 +44,13 @@
                 {
                     $_SESSION['user_id'] = $user_data['user_id'];
                     retWithInfo("Login successful. User_ID: $user_data[user_id]");
-                    header("Location: deleteContact.php");
                 }
 
                 else
                 {
                     retWithErr("Incorrect password.");
                 }
-            } 
+            }
 
             else
             {

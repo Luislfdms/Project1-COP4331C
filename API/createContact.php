@@ -29,10 +29,18 @@
         else
         {
             // Retrieve user input
-            $fName = $_POST["first_name"];
-            $lName = $_POST["last_name"];
-            $email = $_POST["email"];
-            $phone = $_POST["phone_number"];
+            if (isset($_POST["first_name"]) && isset($_POST["last_name"]) && isset($_POST["email"]) && isset($_POST["phone_number"])) 
+            {
+                $fName = $_POST["first_name"];
+                $lName = $_POST["last_name"];
+                $email = $_POST["email"];
+                $phone = $_POST["phone_number"];
+            } 
+            
+            else 
+            {
+                retWithErr("Missing one or more information fields.");
+            }
     
             // Check if a email or phone number already exist
             $sql = "SELECT * FROM contacts WHERE (email = ? OR phone_number = ?) AND user_id = ?";

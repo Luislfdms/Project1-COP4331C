@@ -20,4 +20,3 @@
         sendResInfoAsJson($info);
     }
 ?>
-    
