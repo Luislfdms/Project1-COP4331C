@@ -21,7 +21,7 @@ const Contacts = () => {
 
     }
     const handleAddContact = () => {
-       return Redirect("/create")
+       return window.location.assign("/create");
     }
     
     const fetchUserData = () => {
