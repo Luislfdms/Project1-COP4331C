@@ -21,20 +21,20 @@ const Contacts = () => {
 
     }
     const handleAddContact = () => {
-        return Redirect("/create");
+        return window.location.assign("/create");
     }
     
     const fetchUserData = () => {
         if (DEBUG)
             setContacts([{id: "test-1", firstName: "Firstname", lastName: "Lastname", email: "test-contact-1@example.com", phoneNumber: "555-PHONE-NO"}, ...Array.from({length: 9}, (_, i)=>({id: `test-${i+3}`, firstName: `Name${i}`, lastName: "Surname", email: `test-contact-${i+3}@example.com`, phoneNumber: `555-EXA-MPLE-${i+1}`})), {id: "test-99", firstName: "Name", lastName: "Surname", email: `test-contact-${"9".repeat(99)}@example.com`, phoneNumber: "555-EXA-MPLE"}]);
         else
-        fetch(/*database endoint*/)// need db endpoint to fetch data in db
-        .then(res => {
-            return res.json();
-        })
-        .then(data => {
-            setContacts(data)
-        });
+        {
+            const fetchData = async () => {
+                const result = await fetch('http://localhost:3001/contacts');
+                const jsonResult = result.json();
+                setContacts(jsonResult)
+            }
+        }
     }
     
     useEffect(() => {// use Effect, runs everytime the app renders
