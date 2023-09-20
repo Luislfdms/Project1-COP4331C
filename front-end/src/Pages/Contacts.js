@@ -11,6 +11,11 @@ const Contacts = () => {
         setContacts(newContacts);
         //need to find a way to post new updated list to database
     }
+    const handleDeleteAll = () => {
+        const newContacts = []
+        setContacts(newContacts);
+        // same deal here
+    }
 
     const handleEditContact = () =>{
 
@@ -21,7 +26,7 @@ const Contacts = () => {
     
     const fetchUserData = () => {
         if (DEBUG)
-            setContacts([{userID: "d40bf310-ef43-4b79-a341-71f218f5fb66", firstName: "Firstname", lastName: "Lastname", email: "test-contact-1@example.com", phoneNumber: "555-PHONE-NO"}, {userID: "80c0f39f-c02f-40f7-b9a5-245c1039c6af", firstName: "Name", lastName: "Surname", email: "test-contact-2@example.com", phoneNumber: "555-EXA-MPLE"}]);
+            setContacts([{id: "test-1", firstName: "Firstname", lastName: "Lastname", email: "test-contact-1@example.com", phoneNumber: "555-PHONE-NO"}, ...Array.from({length: 9}, (_, i)=>({id: `test-${i+3}`, firstName: `Name${i}`, lastName: "Surname", email: `test-contact-${i+3}@example.com`, phoneNumber: `555-EXA-MPLE-${i+1}`})), {id: "test-99", firstName: "Name", lastName: "Surname", email: `test-contact-${"9".repeat(99)}@example.com`, phoneNumber: "555-EXA-MPLE"}]);
         else
         fetch(/*database endoint*/)// need db endpoint to fetch data in db
         .then(res => {
@@ -38,8 +43,7 @@ const Contacts = () => {
 
     return (  
         <div className="contacts">
-            <button> <a href="/create">Add Contact</a></button>
-            {contacts && <ContactList contacts = {contacts} title = "All Contacts!" handleDelete={handleDelete} handleEdit={handleEditContact}/>}
+            <ContactList contacts = {contacts} title = "All Contacts!" handleDelete={handleDelete} handleEdit={handleEditContact} handleCreate={handleAddContact} handleDeleteAll={handleDeleteAll}/>
         </div>
     );
 }
