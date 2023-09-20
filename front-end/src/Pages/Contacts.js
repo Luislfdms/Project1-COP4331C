@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import ContactList from "../Components/ContactList";
+import { Redirect } from "react-router-dom";
 
 const Contacts = () => {
     const [contacts, setContacts] = useState([]);//contacts useState
-
     const DEBUG = true;  // temporary!
 
     const handleDelete = (id) =>{// deletes item from contact based on specified id
@@ -16,14 +16,7 @@ const Contacts = () => {
 
     }
     const handleAddContact = () => {
-        fetch('http://localhost:3000/users/', {// ****** need to enter API endpoint in order to post user/pw
-      method: 'POST',// tells server that we are sending an object
-      headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
-    }).then(() => {
-      console.log('new user added');
-      //need to find a way to put added contact in database
-     //history.push('/');// takes us back to home page usin its route
-    })
+       return Redirect("/create")
     }
     
     const fetchUserData = () => {
@@ -45,8 +38,8 @@ const Contacts = () => {
 
     return (  
         <div className="contacts">
+            <button> <a href="/create">Add Contact</a></button>
             {contacts && <ContactList contacts = {contacts} title = "All Contacts!" handleDelete={handleDelete} handleEdit={handleEditContact}/>}
-            <button onClick={handleAddContact}>Add Contact</button>
         </div>
     );
 }
