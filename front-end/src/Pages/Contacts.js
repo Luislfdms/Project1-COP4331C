@@ -17,11 +17,11 @@ const Contacts = () => {
         // same deal here
     }
 
-    const handleEditContact = () =>{
+    const handleEditContact = (id) =>{
 
     }
     const handleAddContact = () => {
-       return Redirect("/create")
+        return Redirect("/create");
     }
     
     const fetchUserData = () => {
