@@ -52,8 +52,7 @@ function Signup() {
           onChange={(e) => setPassword(e.target.value)}
           />
 
-          {!isPending && <button>Sign up</button>}
-          {isPending && <button>Signing you up</button>}
+          <input type="submit" value="Sign up" /> 
         </form>
     </div>
   )

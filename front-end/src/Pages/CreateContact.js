@@ -74,8 +74,7 @@ const CreateContact = () => {
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
 
-           {isPending &&<button>Loading...</button>}
-           {!isPending  && <button>Add Contact</button>}
+            <input type="submit" value="Create Contact" /> 
           </form>
         </div>
      );
