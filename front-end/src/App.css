@@ -27,6 +27,12 @@
   right: 0;
   align-items: center;
 }
+.home-nav, .signin-info {
+  width: 15em;
+}
+.signin-info {
+  text-align: right;
+}
 .searchbar {
   flex-grow: .3;
 }
