@@ -6,39 +6,70 @@ const Login = () => {
   const link = 'url';
   const [username,setUsername] = useState("");
   const [password,setPassword] = useState("");
-  const {data:users,isPending,error} = useFetch(link);
-  const [authenticated, setauthenticated] = useState(localStorage.getItem(localStorage.getItem("authenticated")|| false));
-
+  const [errorMessages, setErrorMessages] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);    
+  
   const handleSubmit = (e) => {
+    var loginCredentials = {username,password}
     e.preventDefault()
-    const account = users.find((user) => user.username === username);
-    if (account && account.password === password) {
-        setauthenticated(true)
-        localStorage.setItem("authenticated", true);
-    }
+
+    const result = fetch()
+    const userData = result.find((user)=> user.username === loginCredentials.username)
+      if(userData)
+      {
+        if (userData.password !== loginCredentials.password) {
+          setErrorMessages({name: "pass", message:errors.pass});
+        }
+        else{
+          setIsSubmitted(true);
+        }
+      }
+      else{
+        setErrorMessages({name: "uname" , message: errors.uname});
+      }
   }
-  return (
-    <div className="login form">
-        <h2> Enter information to log-in</h2>
-        <form onSubmit={handleSubmit}>
+  const errors = {
+    uname : "invalid username",
+    pass: "invalid password"
+  };
+
+  const renderErrorMessage = (name) =>
+    name === errorMessages.name && (
+      <div className="error">{errorMessages.message}</div>
+    );
+  const loginForm = (
+      <h2> Enter information to log-in</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
           <label>Username</label>
           <input 
             type="text"
             required
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            name='uname'
           />
-
+          {renderErrorMessage("uname")}
+        </div>
+        <div>
           <label>Password</label>
           <input 
             type="text"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            name= 'pass'
             />
-
-          <input type="submit" value="Log in" />  
-          </form>
+            {renderErrorMessage("pass")}
+        </div>
+        <input type="submit" value="Log in" /> 
+      </form>
+    );
+          
+  return (
+    
+    <div className="login form">
+          {isSubmitted ?  : loginForm} 
           <p>if you do not currently have an account <a href="/signup"> Click Here </a> to sign up</p>
     </div>
   );

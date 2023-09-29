@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ContactList from "../Components/ContactList";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const Contacts = () => {
     const [contacts, setContacts] = useState([]);//contacts useState
@@ -18,28 +18,31 @@ const Contacts = () => {
     }
 
     const handleEditContact = (id) =>{
-
+       <Redirect to = {`/contacts/${contact.id}`}> </Redirect>
     }
+
     const handleAddContact = () => {
         return window.location.assign("/create");
     }
     
-    const fetchUserData = () => {
+    const fetchUserData = () => 
+    {
         if (DEBUG)
             setContacts([{id: "test-1", firstName: "Firstname", lastName: "Lastname", email: "test-contact-1@example.com", phoneNumber: "555-PHONE-NO"}, ...Array.from({length: 9}, (_, i)=>({id: `test-${i+3}`, firstName: `Name${i}`, lastName: "Surname", email: `test-contact-${i+3}@example.com`, phoneNumber: `555-EXA-MPLE-${i+1}`})), {id: "test-99", firstName: "Name", lastName: "Surname", email: `test-contact-${"9".repeat(99)}@example.com`, phoneNumber: "555-EXA-MPLE"}]);
         else
         {
             const fetchData = async () => {
-                const result = await fetch('http://localhost:3001/contacts');
-                const jsonResult = result.json();
+                const result = await fetch('http://localhost:3001/contacts')
+                const jsonResult = await result.json()
                 setContacts(jsonResult)
             }
+            fetchData()
         }
     }
     
     useEffect(() => {// use Effect, runs everytime the app renders
         fetchUserData()
-    },[])
+    },[contacts])
 
     return (  
         <div className="contacts">
