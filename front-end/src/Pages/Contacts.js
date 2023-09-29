@@ -6,9 +6,18 @@ const Contacts = () => {
     const [contacts, setContacts] = useState([]);//contacts useState
     const DEBUG = true;  // temporary!
 
-    const handleDelete = (id) =>{// deletes item from contact based on specified id
+    const handleDelete = async(id) =>{// deletes item from contact based on specified id
         const newContacts = contacts.filter(contact => contact.id !== id)
         setContacts(newContacts);
+        const result = await fetch('http://localhost:3001/contacts', {
+            method: 'POST',
+            header:{
+                'Content-type': "application/json"
+            }, 
+            body: JSON.stringify(newContacts)
+        })
+
+        const resultInJson = await result.json()
         //need to find a way to post new updated list to database
     }
     const handleDeleteAll = () => {
@@ -18,7 +27,6 @@ const Contacts = () => {
     }
 
     const handleEditContact = (id) =>{
-       <Redirect to = {`/contacts/${contact.id}`}> </Redirect>
     }
 
     const handleAddContact = () => {

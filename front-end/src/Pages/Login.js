@@ -32,12 +32,16 @@ const Login = () => {
     uname : "invalid username",
     pass: "invalid password"
   };
-
+  const redirectSignUp = () => {
+    return  window.location.assign("/signup")
+  }
+   
   const renderErrorMessage = (name) =>
     name === errorMessages.name && (
       <div className="error">{errorMessages.message}</div>
     );
   const loginForm = (
+    <div className='loginForm'>
       <h2> Enter information to log-in</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -64,13 +68,14 @@ const Login = () => {
         </div>
         <input type="submit" value="Log in" /> 
       </form>
+    </div>
     );
           
   return (
     
     <div className="login form">
-          {isSubmitted ?  : loginForm} 
-          <p>if you do not currently have an account <a href="/signup"> Click Here </a> to sign up</p>
+          {isSubmitted ?  <div>User is successfully logged in</div>: loginForm} 
+          <button onClick={redirectSignUp}> sign up </button>
     </div>
   );
 }

@@ -13,21 +13,19 @@ const CreateContact = () => {
     //const {isPending, setIsPending} = useState(false);
     //const history = useHistory();
     
-    const handleCreateContact = (e) =>
+    const handleCreateContact = async(e) =>
     {
-        const newContact = {firstName, lastName,userID,email,phoneNumber};
-        e.preventDefault();
-    
-        setIsPending(true);
-    
-        fetch('http://localhost:3000/users/', {// ****** need to enter API endpoint in order to post user/pw
-          method: 'POST',// tells server that we are sending an object
-          headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
-        }).then(() => {
-          console.log('new user added');
-          setIsPending(false);
-         // history.go(-1); goes back one page
-        })
+      e.preventDefault();
+      const newContact = {firstName, lastName,userID,email,phoneNumber};
+      setIsPending(true);
+      const result = await fetch('http://localhost:3000/users/', {// ****** need to enter API endpoint in order to post user/pw
+        method: 'POST',// tells server that we are sending an object
+        headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
+        body: JSON.stringify(newContact)
+      })
+      const resultInJson = await result.json();
+      console.log('new user added');
+      setIsPending(false);
     }
 
     return ( 
@@ -73,8 +71,8 @@ const CreateContact = () => {
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
-
-            <input type="submit" value="Create Contact" /> 
+            {isPending && <input type="pending">Pending...</input> }
+            {!isPending && <input type="submit" value="Create Contact" /> }
           </form>
         </div>
      );
