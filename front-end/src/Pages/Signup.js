@@ -8,21 +8,19 @@ function Signup() {
   const [password, setPassword] = useState('');//variable to get password
   const [isPending, setIsPending] = useState(false);// variable to display is pending message
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const user = { username, password};
 
     setIsPending(true);
-
-    fetch('http://localhost:3000/users/', {// ****** need to enter API endpoint in order to post user/pw
-      method: 'POST',// tells server that we are sending an object
-      headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
-    }).then(() => {
+      const result = await fetch('http://localhost:3000/users/', {// ****** need to enter API endpoint in order to post user/pw
+        method: 'POST',// tells server that we are sending an object
+        headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
+        body: JSON.stringify(user)
+      })
+      const resultInJson = await result.json();
       console.log('new user added');
       setIsPending(false);
-     // history.go(-1); goes back one page
-     history.push('/');// takes us back to home page usin its route
-    })
   }
   return (
     <div className="signup form">
