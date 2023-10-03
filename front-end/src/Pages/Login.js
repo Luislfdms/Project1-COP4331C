@@ -32,6 +32,7 @@ const Login = () => {
     uname : "invalid username",
     pass: "invalid password"
   };
+  
   const redirectSignUp = () => {
     return  window.location.assign("/signup")
   }
@@ -40,6 +41,7 @@ const Login = () => {
     name === errorMessages.name && (
       <div className="error">{errorMessages.message}</div>
     );
+
   const loginForm = (
     <div className='loginForm'>
       <h2> Enter information to log-in</h2>
