@@ -6,6 +6,7 @@ import Home from './Pages/Home';
 import Navbar from './Components/Navbar';
 import Contacts from './Pages/Contacts';
 import CreateContact from './Pages/CreateContact'
+import EditContact from './Pages/EditContact'
 
 // default page needs to prompt the user to login or signup
 function App() {
@@ -28,6 +29,9 @@ function App() {
             </Route>
             <Route path = "/create">
               <CreateContact />
+            </Route>
+            <Route path = "/update/:id">
+              <EditContact/>
             </Route>
           </Switch>
         </div>

@@ -15,7 +15,7 @@ const ContactList = ({contacts, title, handleDelete, handleEdit, handleDeleteAll
                         <h2>{contact.firstName} {contact.lastName}</h2>
                         <p>{contact.email}</p>
                         <p>{contact.phoneNumber}</p>
-                        <button onClick={() => handleEdit(contact.id)}>Edit</button>
+                        <Link to ={ '/update/${{d.id}'}>Edit</Link>
                         <button className="destructive" onClick={() => handleDelete(contact.id)}>Delete</button>
                     </div>
                 )) : "(No contacts yet.)"}

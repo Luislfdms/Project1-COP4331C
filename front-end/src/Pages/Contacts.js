@@ -27,6 +27,7 @@ const Contacts = () => {
     }
 
     const handleEditContact = (id) =>{
+        
     }
 
     const handleAddContact = () => {
