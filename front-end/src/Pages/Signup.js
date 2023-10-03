@@ -33,64 +33,53 @@ function Signup() {
       e.preventDefault();
       var user = { username, password};
 
-        const result = await fetch('http://localhost:3000/users/', {// ****** need to enter API endpoint in order to post user/pw
+        const result = await fetch('http://localhost:3000/Register.php', {// ****** need to enter API endpoint in order to post user/pw
           method: 'POST',// tells server that we are sending an object
           headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
           body: JSON.stringify(user)
         })
         console.log('new user added');
-        setTimeout(()=>NavigationPreloadManager())
         setIsSubmitted(true);
     }
     else{
       setErrorMessage({name: "pass", message:error.pass})
       setIsSubmitted(false);
     }
-      
-  }
+}  
+const signupForm = (
+  <div className="signup form">
+      <h2> Enter information to Sign up</h2>
+      <form onSubmit={handleSubmit}>
+        <label>Username</label>
+        <input 
+          type="text"
+          required
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
 
-  const renderErrorMessage = (name) =>
-  setTimeout(()=>{
-    name === errorMessage.name && (
-      <div className="error">{errorMessage.message}</div>
-    );
-  },1000);
-  
-  const signupForm = (
-    <div className="signup form">
-        <h2> Enter information to Sign up</h2>
-        <form onSubmit={handleSubmit}>
-          <label>Username</label>
-          <input 
-            type="text"
-            required
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-
-          <label>Password</label>
-          <input 
-            type="password"
-            required
-            value={passwordTry1}
-            onChange={(e) => setPasswordTry1(e.target.value)}
-            name='pass'
-            />
-
-          <label>re-enter Password</label>
-          <input 
+        <label>Password</label>
+        <input 
           type="password"
           required
-          value={passwordTry2}
-          onChange={(e) => setPasswordTry2(e.target.value)}
+          value={passwordTry1}
+          onChange={(e) => setPasswordTry1(e.target.value)}
           name='pass'
           />
 
-          <input type="submit" value="Sign up" /> 
-        </form>
-    </div>
-  );
+        <label>re-enter Password</label>
+        <input 
+        type="password"
+        required
+        value={passwordTry2}
+        onChange={(e) => setPasswordTry2(e.target.value)}
+        name='pass'
+        />
 
+        <input type="submit" value="Sign up" /> 
+      </form>
+  </div>
+);
   
   return (
     <div className="signup form">
@@ -100,4 +89,5 @@ function Signup() {
     </div>
   )
 }
+
 export default Signup
