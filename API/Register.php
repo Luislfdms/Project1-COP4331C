@@ -1,19 +1,21 @@
 <?php
-echo "Testing";
-    // header('Access-Control-Allow-Origin: *');
-    // header('Access-Control-Allow-Methods:  POST, GET, OPTIONS');
-    // header("Access-Control-Allow-Credentials: true");
-    // header("Access-Control-Allow-Headers: *");
-    // include "Auxillary.php";
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods:  POST, GET, OPTIONS');
+    header("Access-Control-Allow-Credentials: true");
+    header("Access-Control-Allow-Headers: *");
+    include "Auxillary.php";
 
-    // // Connect to the database
-    // $connect = db_connect();
+    // Connect to the database
+    $connect = db_connect();
 
-    // // Check for database connection errors
-    // if ($connect->connect_error) 
-    // {
-    //     retWithErr("Database connection error.\n");
-    // }
+    // Check for database connection errors
+    if ($connect->connect_error) 
+    {
+        retWithErr("Database connection error.\n");
+    }
+
+    else
+        echo "DB connection success";
 
     // else
     // {
