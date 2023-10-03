@@ -3,76 +3,67 @@
 
     include "Auxillary.php";
 
-    // Check if the request method is POST
-    if ($_SERVER["REQUEST_METHOD"] == "POST")
+    // Check if the user is logged in
+    if (!isset($_SESSION['user_id'])) 
     {
-        // Check if the user is logged in
-        if (!isset($_SESSION['user_id'])) 
+        retWithErr("User not logged in.\n");
+        header("Location: Login.php");
+        exit();
+    }
+
+    // Retrieve user ID from the session
+    $user_id = $_SESSION['user_id'];
+
+    // Connect to the database
+    $connect = db_connect();
+
+    // Check for database connection errors
+    if ($connect->connect_error) 
+    {
+        retWithErr("Database connection error.\n");
+    } 
+
+    else 
+    {
+        // Retrieve contact ID from the user input
+        if (isset($_POST["contact_id"]))
         {
-            retWithErr("User not logged in.");
-            header("Location: Login.php");
-            exit();
+            $contact_id = $_POST["contact_id"];
         }
 
-        // Retrieve user ID from the session
-        $user_id = $_SESSION['user_id'];
+        // Check if the contact belongs to the logged-in user
+        $sql = "SELECT * FROM contacts WHERE contact_id = ? AND user_id = ?";
+        $stmt = $connect->prepare($sql);
+        $stmt->bind_param("ss", $contact_id, $user_id);
+        $stmt->execute();
 
-        // Connect to the database
-        $connect = db_connect();
-
-        // Check for database connection errors
-        if ($connect->connect_error) 
+        if (!$stmt->fetch()) 
         {
-            retWithErr("Database connection error.");
-        } 
+            retWithErr("Contact not found or does not belong to the user.\n");
+        }
 
-        else 
+        else
         {
-            // Retrieve contact ID from the user input
-            if (isset($_POST["contact_id"]))
-            {
-                $contact_id = $_POST["contact_id"];
-            }
-                
-            else
-            {
-                retWithErr("Contact ID not provided.");
-            }
-
-            // Check if the contact belongs to the logged-in user
-            $sql = "SELECT * FROM contacts WHERE contact_id = ? AND user_id = ?";
-            $stmt = $connect->prepare($sql);
-            $stmt->bind_param("ss", $contact_id, $user_id);
-            $stmt->execute();
-
-            if (!$stmt->fetch()) 
-            {
-                retWithErr("Contact not found or does not belong to the user.");
-            }
-
-            else
-            {
-                $stmt->close();
-                // Delete the contact from the database
-                $sql = "DELETE FROM contacts WHERE contact_id = ?";
-                $stmt = $connect->prepare($sql);
-                $stmt->bind_param("s", $contact_id);
-
-                // Successful deletion
-                if ($stmt->execute()) 
-                {
-                    retWithInfo("Contact successfully deleted.");
-                } 
-                
-                else 
-                {
-                    retWithErr("Failed to delete contact.");
-                }
-            }
-
-            // Close the database connection
             $stmt->close();
-            $connect->close();
+            // Delete the contact from the database
+            $sql = "DELETE FROM contacts WHERE contact_id = ?";
+            $stmt = $connect->prepare($sql);
+            $stmt->bind_param("s", $contact_id);
+
+            // Successful deletion
+            if ($stmt->execute()) 
+            {
+                retWithInfo("Contact successfully deleted.\n");
+            } 
+            
+            else 
+            {
+                retWithErr("Failed to delete contact.\n");
+            }
         }
+
+        // Close the database connection
+        $stmt->close();
+        $connect->close();
     }
 ?>
