@@ -33,10 +33,12 @@ function Signup() {
       e.preventDefault();
       var user = { username, password};
 
-        const result = await fetch('http://localhost:3000/Register.php', {// ****** need to enter API endpoint in order to post user/pw
+        const result = await fetch('http://134.209.165.66/Project1-COP4331C/API/Register.php', {// ****** need to enter API endpoint in order to post user/pw
           method: 'POST',// tells server that we are sending an object
           headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
-          body: JSON.stringify(user)
+          // body: JSON.stringify(user)
+          body: FormData,
+          mode: "cors"
         })
         console.log('new user added');
         setIsSubmitted(true);
