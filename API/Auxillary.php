@@ -1,7 +1,7 @@
 <?php
     function db_connect()
     {
-        return new mysqli("localhost","root", "", "group3");
+        return new mysqli("http://134.209.165.66/","root", "", "contacts_db");
     }
 
     function sendResInfoAsJson($obj)
