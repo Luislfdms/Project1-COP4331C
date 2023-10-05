@@ -30,27 +30,12 @@
 
     else
     {
-        echo "Before SQL statement";
         // Searches all contacts associated with user
-        $sql = "SELECT * FROM CONTACTS WHERE user_id = ?";
-
-        echo "Before sql binds";
-
+        $sql = "SELECT * FROM contacts WHERE user_id = ?";
         $stmt = $connect->prepare($sql);
-
-        echo "After connect->prepare";
-
         $stmt->bind_param("s", $user_id);
-
-        echo "After bind";
-
         $stmt->execute();
-
-        echo "After execute";
-
         $result = $stmt->get_result();
-
-        echo "After sql statements";
 
         if ($result->num_rows > 0)
         {
