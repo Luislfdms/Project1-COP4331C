@@ -3,7 +3,6 @@
     header('Access-Control-Allow-Methods:  POST, GET, OPTIONS');
     header("Access-Control-Allow-Credentials: true");
     header("Access-Control-Allow-Headers: *");
-    
     include "Auxillary.php";
 
     // Connect to the database
