@@ -20,13 +20,13 @@
         $password = "";
         //$confirmPassword = "";
 
-        if (isset($_POST["username"]) && isset($_POST["password"]) /* && isset($_POST["confirm_password" ])*/ )
-        {
-            // Retrieve user input
+        // if (isset($_POST["username"]) && isset($_POST["password"]) /* && isset($_POST["confirm_password" ])*/ )
+        // {
+        //     // Retrieve user input
             $username = $_POST["username"];
             $password = $_POST["password"];
             //$confirmPassword = $_POST["confirm_password"];
-        }
+        // }
 
         // Check if passwords match
         // if ($password != $confirmPassword)
@@ -35,7 +35,7 @@
         // }
 
         // Check all fields are filled
-        else if (empty($username) || empty($password) /*|| empty($confirmPassword)*/ )
+        if (empty($username) || empty($password) /*|| empty($confirmPassword)*/ )
         {
             retWithErr("Enter information for all fields.\n");
         }
