@@ -44,10 +44,10 @@
         {
             $stmt->close();
             // Retrieve user input
-            $fName = $_POST["first_name"];
-            $lName = $_POST["last_name"];
-            $email = $_POST["email"];
-            $phone = $_POST["phone_number"];
+            $fName = $info["first_name"];
+            $lName = $info["last_name"];
+            $email = $info["email"];
+            $phone = $info["phone_number"];
 
             if (empty($fName) || empty($lName) || empty($email) || empty($phone))
             {
