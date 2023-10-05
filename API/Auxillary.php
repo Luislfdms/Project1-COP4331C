@@ -15,13 +15,27 @@
         echo $obj;
     }
 
-    function retWithErr($error)
+    function retWithContactErr($error)
     {
-        sendResInfoAsJson(json_encode($error));
+        $retValue = '{"User ID": "","First Name": "", "Last Name": "", "Email": "", "Phone Number: "", "Error": "' . $error . '"}';
+        sendResInfoAsJson($retValue);
     }
 
-    function retWithInfo($info)
+    function retWithUserErr($error)
     {
-        sendResInfoAsJson(json_encode($info));
+        $retValue = '{"User ID": "", "Error": "' . $error . '"}';
+        sendResInfoAsJson($retValue);
+    }
+
+    function retWithErr($error)
+    {
+        $retValue = '{"Error": "' . $error . '"}';
+        sendResInfoAsJson($retValue);
+    }
+
+    function retWithSuccess($success)
+    {
+        $retValue = '{"Success": "' . $success . '"}';
+        sendResInfoAsJson($retValue);
     }
 ?>

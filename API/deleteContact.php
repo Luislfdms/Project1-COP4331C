@@ -6,7 +6,7 @@
     // Check if the user is logged in
     if (!isset($_SESSION['user_id'])) 
     {
-        retWithErr("User not logged in.\n");
+        retWithErr("User not logged in.");
         header("Location: Login.php");
         exit();
     }
@@ -23,7 +23,7 @@
     // Check for database connection errors
     if ($connect->connect_error) 
     {
-        retWithErr("Database connection error.\n");
+        retWithErr("Database connection error.");
     } 
 
     else
@@ -40,7 +40,7 @@
 
         if (!$stmt->fetch()) 
         {
-            retWithErr("Contact not found or does not belong to the user.\n");
+            retWithErr("Contact with ID: $contact_id not found or does not belong to the user with ID: $user_id.");
         }
 
         else
@@ -54,12 +54,13 @@
             // Successful deletion
             if ($stmt->execute()) 
             {
-                retWithInfo("Contact successfully deleted.\n");
+                retWithSuccess("Contact: $contact_id successfully deleted.");
             } 
             
-            else 
+            // Failed deletion
+            else
             {
-                retWithErr("Failed to delete contact.\n");
+                retWithErr("Failed to delete Contact: $contact_id.");
             }
         }
 

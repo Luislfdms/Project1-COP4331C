@@ -10,7 +10,7 @@
     // Check for database connection errors
     if ($connect->connect_error)
     {
-        retWithErr("Database connection error.\n");
+        retWithErr("Database connection error.");
     }
 
     else
@@ -25,7 +25,7 @@
         // Check all fields are filled
         if (empty($username) || empty($password))
         {
-            retWithErr("Enter information for all fields.\n");
+            retWithErr("Enter information for all fields.");
         }
 
         else
@@ -41,7 +41,7 @@
 
             if ($stmt->fetch())
             {
-                retWithErr("Username already exists.\n");
+                retWithErr("Username already exists.");
             }
 
             else
@@ -52,16 +52,16 @@
                 $stmt = $connect->prepare($sql);
                 $stmt->bind_param("ss", $username, $hashedPassword);
 
-                // Successful insertion
+                // Successful registration
                 if ($stmt->execute())
-                {
-                    retWithInfo("User registration successful. User_ID: " . $stmt->insert_id . "\n");
+                {   
+                    retWithSuccess("User registration successful. User_ID: $stmt->insert_id");
                 }
 
-                // Failed insertion
+                // Failed registration
                 else
                 {
-                    retWithErr("User registration failed.\n");
+                    retWithUserErr("User registration failed.");
                 }
             }
 

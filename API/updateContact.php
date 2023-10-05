@@ -6,7 +6,7 @@
     // Check if the user is logged in
     if (!isset($_SESSION['user_id'])) 
     {
-        retWithErr("User not logged in.\n");
+        retWithErr("User not logged in.");
         header("Location: Login.php");
     }
 
@@ -20,9 +20,9 @@
     $info = getReqInfo();
 
     // Check for database connection errors
-    if ($connect->connect_error) 
+    if ($connect->connect_error)
     {
-        retWithErr("Database connection error.\n");
+        retWithErr("Database connection error.");
     }
 
     else
@@ -37,12 +37,18 @@
 
         if (!$stmt->fetch()) 
         {
-            retWithErr("Contact not found or does not belong to the user.\n");
+            retWithErr("Contact with ID: $contact_id not found or does not belong to the user with ID: $user_id.");
         }
 
         else
         {
             $stmt->close();
+            // Retrieve user input
+            $fName = "";
+            $lName = "";
+            $email = "";
+            $phone = "";
+
             // Retrieve user input
             $fName = $info["first_name"];
             $lName = $info["last_name"];
@@ -51,7 +57,7 @@
 
             if (empty($fName) || empty($lName) || empty($email) || empty($phone))
             {
-                retWithErr("Enter information for all fields.\n");
+                retWithErr("Enter information for all fields.");
             }
 
             // Check if a email or phone number already exist
@@ -63,29 +69,44 @@
 
             if ($result->num_rows > 0)
             {
-                retWithErr("A contact exists that is already associated with this email or phone number.\n");
+                retWithErr("A contact exists that is already associated with this email or phone number.");
             }
 
-            else
+            else 
             {
-                $stmt->close();
                 // Update contact information in the database
                 $sql = "UPDATE contacts SET first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE user_id = ? AND contact_id = ?";
                 $stmt = $connect->prepare($sql);
                 $stmt->bind_param("ssssss", $fName, $lName, $email, $phone, $user_id, $contact_id);
-
-                // Successful update
-                if ($stmt->execute())
+            
+                // Execute the prepared statement & successful update
+                if ($stmt->execute()) 
                 {
-                    retWithInfo("Contact successfully updated. contact_id = $contact_id, first_name = $fName, last_name = $lName, email = $email, phone_number = $phone") . "\n";
+                    // Initialize an array to store contact data
+                    $contacts = array();
+
+                    $contact = array(
+                        "User ID"       => $user_id,
+                        "Contact ID"    => $contact_id,
+                        "First Name"    => $fName,
+                        "Last Name"     => $lName,
+                        "Email"         => $email,
+                        "Phone Number"  => $phone
+                    );
+            
+                    $contacts[] = $contact;
+            
+                    // Convert the array to JSON
+                    $search = json_encode($contacts);
+                    sendResInfoAsJson($search);
                 }
 
                 // Failed update
-                else
+                else 
                 {
-                    retWithErr("Failed to update contact.\n");
+                    retWithContactErr("Failed to update contact with ID: $contact_id.");
                 }
-
+            
                 // Close the prepared statement
                 $stmt->close();
             }
