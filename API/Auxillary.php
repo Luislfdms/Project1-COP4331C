@@ -17,11 +17,11 @@
 
     function retWithErr($error)
     {
-        sendResInfoAsJson($error);
+        sendResInfoAsJson(json_encode($error));
     }
 
     function retWithInfo($info)
     {
-        sendResInfoAsJson($info);
+        sendResInfoAsJson(json_encode($info));
     }
 ?>
