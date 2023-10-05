@@ -6,8 +6,7 @@
 
     function db_connect()
     {
-        // return new mysqli("localhost","luis-souto", "Groupslp3!", "contacts_db");
-        return new mysqli("localhost", "root", "", "group3");
+        return new mysqli("localhost","luis-souto", "Groupslp3!", "contacts_db");
     }
 
     function sendResInfoAsJson($obj)
