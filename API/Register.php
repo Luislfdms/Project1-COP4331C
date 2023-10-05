@@ -1,8 +1,4 @@
 <?php
-    header('Access-Control-Allow-Origin: *');
-    header('Access-Control-Allow-Methods:  POST, GET, OPTIONS');
-    header("Access-Control-Allow-Credentials: true");
-    header("Access-Control-Allow-Headers: *");
     include "Auxillary.php";
 
     // Connect to the database
@@ -20,24 +16,13 @@
     {
         $username = "";
         $password = "";
-        //$confirmPassword = "";
 
-        // if (isset($_POST["username"]) && isset($_POST["password"]) /* && isset($_POST["confirm_password" ])*/ )
-        // {
-        //     // Retrieve user input
-            $username = $info["username"];
-            $password = $info["password"];
-            //$confirmPassword = $_POST["confirm_password"];
-        // }
-
-        // Check if passwords match
-        // if ($password != $confirmPassword)
-        // {
-        //     retWithErr("Passwords do not match.\n");
-        // }
+        // Retrieve user input
+        $username = $info["username"];
+        $password = $info["password"];
 
         // Check all fields are filled
-        if (empty($username) || empty($password) /*|| empty($confirmPassword)*/ )
+        if (empty($username) || empty($password))
         {
             retWithErr("Enter information for all fields.\n");
         }
