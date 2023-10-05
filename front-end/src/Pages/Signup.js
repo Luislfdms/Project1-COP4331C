@@ -33,7 +33,7 @@ function Signup() {
       e.preventDefault();
       var user = { username, password};
 
-        const result = await fetch('http://localhost:8000/Register.php', {// ****** need to enter API endpoint in order to post user/pw
+        const result = await fetch('http://contx.pro/Register.php', {// ****** need to enter API endpoint in order to post user/pw
           method: 'POST',// tells server that we are sending an object
           headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
           // body: JSON.stringify(user)
