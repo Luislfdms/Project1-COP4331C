@@ -30,19 +30,15 @@
 
     else
     {
-        echo "Inside else statement";
         // Searches all contacts associated with user
-        $sql = "SELECT * FROM CONTACTS WHERE user_id = $user_id";
-
-        echo "Before sql statement";
-
-        $result = $connect->query($sql);
-
-        echo "After sql statement";
+        $sql = "SELECT * FROM CONTACTS WHERE user_id = ?";
+        $stmt = $connect->prepare($sql);
+        $stmt->bind_param("s", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows > 0)
         {
-            echo "inside result statement";
             // Initialize an array to store contact data
             $contacts = array();
 
@@ -60,8 +56,6 @@
 
                 $contacts[] = $contact;
             }
-
-            echo "Before json_encode";
             
             // Convert the array to JSON
             $search = json_encode($contacts);

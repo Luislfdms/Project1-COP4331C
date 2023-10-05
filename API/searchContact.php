@@ -30,15 +30,13 @@
 
     else
     {
-        echo "Inside else statement";
-
         $search = "";
 
         // Collect user input within navigation bar
         $search = $info["search"];
 
         // Full and Partial searches
-        $sql = "SELECT * FROM CONTACTS WHERE (user_id =" . $user_id . " AND (first_name LIKE '%" 
+        $sql = "SELECT * FROM CONTACTS WHERE (user_id = ? AND (first_name LIKE '%" 
         . $search . "%' OR last_name LIKE '%" 
         . $search . "%' OR email LIKE '%"
         . $search . "%' OR phone_number LIKE '%"
@@ -48,15 +46,13 @@
         . $search . "%' OR CONCAT(first_name, ' ', last_name , ' ', email, ' ', phone_number) LIKE '%"
         . $search . "%'));";
 
-        echo "before sql statement";
-
-        $result = $connect->query($sql);
-
-        echo "after sql statement";
+        $stmt = $connect->prepare($sql);
+        $stmt->bind_param("s", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows > 0)
         {
-            echo "inside result statement";
             // Initialize an array to store contact data
             $contacts = array();
 
@@ -74,8 +70,6 @@
 
                 $contacts[] = $contact;
             }
-            
-            echo "Before json_encode";
 
             // Convert the array to JSON
             $search = json_encode($contacts);

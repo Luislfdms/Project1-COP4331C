@@ -30,6 +30,7 @@
     {
         $contact_id = "";
 
+        // User input for field
         $contact_id = $info["contact_id"];
 
         // Check if the contact belongs to the logged-in user

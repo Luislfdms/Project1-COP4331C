@@ -18,7 +18,7 @@
         $username = "";
         $password = "";
 
-        // Retrieve user input
+        // User input for fields
         $username = $info["username"];
         $password = $info["password"];
 

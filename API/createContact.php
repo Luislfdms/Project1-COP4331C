@@ -33,6 +33,7 @@
         $email = "";
         $phone = "";
 
+        // User input for fields
         $fName = $info["first_name"];
         $lName = $info["last_name"];
         $email = $info["email"];

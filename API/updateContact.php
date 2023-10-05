@@ -27,6 +27,7 @@
 
     else
     {
+        // Assigned through URL when editing
         $contact_id = $_GET["contact_id"];
 
         // Check if the contact belongs to the logged-in user
@@ -43,13 +44,13 @@
         else
         {
             $stmt->close();
-            // Retrieve user input
+
             $fName = "";
             $lName = "";
             $email = "";
             $phone = "";
 
-            // Retrieve user input
+            // User input for fields
             $fName = $info["first_name"];
             $lName = $info["last_name"];
             $email = $info["email"];

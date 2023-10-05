@@ -20,6 +20,7 @@
         $username = "";
         $password = "";
 
+        // User input for fields
         $username = $info["username"];
         $password = $info["password"];
 
