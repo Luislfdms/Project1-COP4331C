@@ -37,7 +37,7 @@ function Signup() {
           method: 'POST',// tells server that we are sending an object
           headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
           // body: JSON.stringify(user)
-          body: FormData,
+          body: JSON.stringify({username, password}),
           mode: "cors"
         })
         console.log('new user added');
