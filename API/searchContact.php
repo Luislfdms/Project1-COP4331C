@@ -19,6 +19,8 @@
     // Connect to the database
     $connect = db_connect();
 
+    $info = getReqInfo();
+
     // Check for database connection errors
     if ($connect->connect_error) 
     {
@@ -27,11 +29,8 @@
 
     else
     {
-        // Retrieve user input
-        if (isset($_POST["contact_id"])) 
-        {
-            $contact_id = $_POST["contact_id"];
-        }
+
+        $contact_id = $info["contact_id"];
 
         // Search for a contact associated with the user
         $sql = "SELECT * FROM contacts WHERE user_id = ? AND contact_id = ?";

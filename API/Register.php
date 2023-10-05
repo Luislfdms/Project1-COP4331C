@@ -17,12 +17,15 @@
         $username = "";
         $password = "";
 
-        // Retrieve user input
-        $username = $info["username"];
-        $password = $info["password"];
+        if (isset($info["username"]) && ($info["password"]))
+        {
+            // Retrieve user input
+            $username = $info["username"];
+            $password = $info["password"];
+        }
 
         // Check all fields are filled
-        if (empty($username) || empty($password))
+        else if (empty($username) || empty($password))
         {
             retWithErr("Enter information for all fields.\n");
         }

@@ -2,6 +2,8 @@
     session_start();
     
     include "Auxillary.php";
+
+    $info = getReqInfo();
     
     // Connect to the database
     $connect = db_connect();
@@ -17,14 +19,10 @@
         $username = "";
         $password = "";
 
-        // Retrieve user input
-        if (isset($_POST["username"]) && isset($_POST["password"]))
-        {
-            $username = $_POST["username"];
-            $password = $_POST["password"];
-        }
+        $username = $info["username"];
+        $password = $info["password"];
 
-        else if (empty($username) || empty($password))
+        if (empty($username) || empty($password))
         {
             retWithErr("Username or password not provided.\n");
         }
