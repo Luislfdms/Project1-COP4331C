@@ -36,7 +36,7 @@
         $search = $info["search"];
 
         echo "Before SQL statement";
-        
+
         // Full and Partial searches
         $sql = "SELECT * FROM CONTACTS WHERE (user_id = ? AND (first_name LIKE '%" 
         . $search . "%' OR last_name LIKE '%" 
@@ -51,8 +51,17 @@
         echo "Before sql binds";
 
         $stmt = $connect->prepare($sql);
+
+        echo "After connect->prepare";
+
         $stmt->bind_param("s", $user_id);
+
+        echo "After bind";
+
         $stmt->execute();
+
+        echo "After execute";
+
         $result = $stmt->get_result();
 
         echo "After sql statements";
