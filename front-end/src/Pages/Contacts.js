@@ -20,6 +20,7 @@ const Contacts = () => {
         const resultInJson = await result.json()
         //need to find a way to post new updated list to database
     }
+    
     const handleDeleteAll = () => {
         const newContacts = []
         setContacts(newContacts);
