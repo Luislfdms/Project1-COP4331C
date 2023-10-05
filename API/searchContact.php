@@ -30,6 +30,8 @@
 
     else
     {
+        echo "Inside else statement";
+
         $search = "";
 
         // Collect user input within navigation bar
@@ -46,10 +48,15 @@
         . $search . "%' OR CONCAT(first_name, ' ', last_name , ' ', email, ' ', phone_number) LIKE '%"
         . $search . "%'));";
 
+        echo "before sql statement";
+
         $result = $connect->query($sql);
+
+        echo "after sql statement";
 
         if ($result->num_rows > 0)
         {
+            echo "inside result statement";
             // Initialize an array to store contact data
             $contacts = array();
 
@@ -68,6 +75,8 @@
                 $contacts[] = $contact;
             }
             
+            echo "Before json_encode";
+
             // Convert the array to JSON
             $search = json_encode($contacts);
             sendResInfoAsJson($search);

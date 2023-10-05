@@ -60,55 +60,58 @@
                 retWithErr("Enter information for all fields.");
             }
 
-            // Check if a email or phone number already exist
-            $sql = "SELECT * FROM contacts WHERE (email = ? OR phone_number = ?) AND user_id = ?";
-            $stmt = $connect->prepare($sql);
-            $stmt->bind_param("sss", $email, $phone, $user_id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            if ($result->num_rows > 0)
+            else
             {
-                retWithErr("A contact exists that is already associated with this email or phone number.");
-            }
-
-            else 
-            {
-                // Update contact information in the database
-                $sql = "UPDATE contacts SET first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE user_id = ? AND contact_id = ?";
+                // Check if a email or phone number already exist
+                $sql = "SELECT * FROM contacts WHERE (email = ? OR phone_number = ?) AND user_id = ?";
                 $stmt = $connect->prepare($sql);
-                $stmt->bind_param("ssssss", $fName, $lName, $email, $phone, $user_id, $contact_id);
-            
-                // Execute the prepared statement & successful update
-                if ($stmt->execute()) 
-                {
-                    // Initialize an array to store contact data
-                    $contacts = array();
+                $stmt->bind_param("sss", $email, $phone, $user_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
 
-                    $contact = array(
-                        "User ID"       => $user_id,
-                        "Contact ID"    => $contact_id,
-                        "First Name"    => $fName,
-                        "Last Name"     => $lName,
-                        "Email"         => $email,
-                        "Phone Number"  => $phone
-                    );
-            
-                    $contacts[] = $contact;
-            
-                    // Convert the array to JSON
-                    $search = json_encode($contacts);
-                    sendResInfoAsJson($search);
+                if ($result->num_rows > 0)
+                {
+                    retWithErr("A contact exists that is already associated with this email or phone number.");
                 }
 
-                // Failed update
                 else 
                 {
-                    retWithContactErr("Failed to update contact with ID: $contact_id.");
+                    // Update contact information in the database
+                    $sql = "UPDATE contacts SET first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE user_id = ? AND contact_id = ?";
+                    $stmt = $connect->prepare($sql);
+                    $stmt->bind_param("ssssss", $fName, $lName, $email, $phone, $user_id, $contact_id);
+                
+                    // Execute the prepared statement & successful update
+                    if ($stmt->execute()) 
+                    {
+                        // Initialize an array to store contact data
+                        $contacts = array();
+
+                        $contact = array(
+                            "User ID"       => $user_id,
+                            "Contact ID"    => $contact_id,
+                            "First Name"    => $fName,
+                            "Last Name"     => $lName,
+                            "Email"         => $email,
+                            "Phone Number"  => $phone
+                        );
+                
+                        $contacts[] = $contact;
+                
+                        // Convert the array to JSON
+                        $search = json_encode($contacts);
+                        sendResInfoAsJson($search);
+                    }
+
+                    // Failed update
+                    else 
+                    {
+                        retWithContactErr("Failed to update contact with ID: $contact_id.");
+                    }
+                
+                    // Close the prepared statement
+                    $stmt->close();
                 }
-            
-                // Close the prepared statement
-                $stmt->close();
             }
         }
 
