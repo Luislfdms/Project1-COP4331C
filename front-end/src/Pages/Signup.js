@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from "react";
 import {useHistory, Navigate} from "react-router-dom"
+import {useCookies} from "react-cookie"
 
 function Signup() {
   const history = useHistory();
@@ -10,6 +11,8 @@ function Signup() {
   const [password, setPassword] = useState('');//variable to get password
   const [errorMessage, setErrorMessage] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);    
+
+  const [cookies, setCookie] = useCookies("userID");
 
   function comparePass (passwordTry1,passwordTry2) 
   {
@@ -27,26 +30,36 @@ function Signup() {
   }
 
   const handleSubmit = async(e) => {
+    setIsSubmitted(true);
     const passwordMatch = comparePass(passwordTry1,passwordTry2);
     if(passwordMatch)
     {
       e.preventDefault();
       var user = { username, password};
 
-        const result = await fetch('http://contx.pro/API/Register.php', {// ****** need to enter API endpoint in order to post user/pw
+        const result = await fetch('/API/Register.php', {
           method: 'POST',// tells server that we are sending an object
           headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
-          // body: JSON.stringify(user)
-          body: JSON.stringify({username, password}),
-          mode: "cors"
-        })
-        console.log('new user added');
-        setIsSubmitted(true);
-    }
-    else{
+          body: JSON.stringify({username, password})
+        });
+        if (result.ok) {
+          try {
+            const json = await result.json();
+            setCookie("userID", json.user_id);
+            console.log('new user added', json);
+            window.location.assign("/contacts");
+            return;
+          } catch (e) {
+            console.error(e);
+            setErrorMessage({name: "json", message: "The response from the server could not be parsed."})
+          }
+        } else {
+          setErrorMessage({name: "api", message: await result.text()});
+        }
+    } else {
       setErrorMessage({name: "pass", message:error.pass})
-      setIsSubmitted(false);
     }
+    setIsSubmitted(false);
 }  
 const signupForm = (
   <div className="signup form">
@@ -85,8 +98,8 @@ const signupForm = (
   
   return (
     <div className="signup form">
-      {errorMessage&&<p>{errorMessage.message}</p>}
-      {isSubmitted ? <div>Successfully signed up</div>: signupForm}
+      {errorMessage&&<div className="error">{errorMessage.message}</div>}
+      {isSubmitted ? <div>Successfully signed up</div>: cookies.userID ? <div className="error">You're already logged in!</div> : signupForm}
         {/* {user && <Navigate to="/contacts" replace = {true}/>} */}
     </div>
   )

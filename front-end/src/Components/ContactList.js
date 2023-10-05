@@ -1,24 +1,21 @@
-const ContactList = ({contacts, title, handleDelete, handleEdit, handleDeleteAll=null, handleCreate=null}) => {
+import ContactPreview from "./ContactPreview.js";
+
+
+const ContactList = ({contacts, setContacts, userID, title, onDelete, handleDeleteAll=null, handleCreate=null, fallback="(No contacts yet.)"}) => {
     return ( 
         <div className="contact-list">
             <div className="contact-list-header">
                 <div className="contact-list-buttons">
                     {handleCreate && <button onClick={handleCreate}>Create</button>}
-                    {handleDeleteAll && <button className="destructive" onClick={handleDeleteAll} disabled={!contacts?.length}>Delete All</button>}
+                    {/* {handleDeleteAll && <button className="destructive" onClick={handleDeleteAll} disabled={!contacts?.length}>Delete All</button>} */}
                 </div>
                 <div className="contact-list-buttons-fix" />
                 <h1 className="contact-list-title">{title}</h1>
             </div>
             <div className="contact-list-body">
-                {contacts?.length ? contacts.map((contact) => (//maps each item in contacts based on 'id'
-                    <div className="contact-preview" key = {contact.id}>
-                        <h2>{contact.firstName} {contact.lastName}</h2>
-                        <p>{contact.email}</p>
-                        <p>{contact.phoneNumber}</p>
-                        <button onClick={() => handleEdit(contact.id)}>Edit</button>
-                        <button className="destructive" onClick={() => handleDelete(contact.id)}>Delete</button>
-                    </div>
-                )) : "(No contacts yet.)"}
+                {contacts && contacts.length ? contacts.map((contact) => (//maps each item in contacts
+                    <ContactPreview contact={contact} onDelete={onDelete} />
+                )) : fallback}
             </div>
         </div>
      );
