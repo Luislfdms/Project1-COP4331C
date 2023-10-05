@@ -4,6 +4,7 @@
     // Connect to the database
     $connect = db_connect();
 
+    // Receives User Input as JSON
     $info = getReqInfo();
 
     // Check for database connection errors
@@ -17,15 +18,12 @@
         $username = "";
         $password = "";
 
-        if (isset($info["username"]) && ($info["password"]))
-        {
-            // Retrieve user input
-            $username = $info["username"];
-            $password = $info["password"];
-        }
+        // Retrieve user input
+        $username = $info["username"];
+        $password = $info["password"];
 
         // Check all fields are filled
-        else if (empty($username) || empty($password))
+        if (empty($username) || empty($password))
         {
             retWithErr("Enter information for all fields.\n");
         }

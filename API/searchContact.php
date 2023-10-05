@@ -19,6 +19,7 @@
     // Connect to the database
     $connect = db_connect();
 
+    // Receives User Input as JSON
     $info = getReqInfo();
 
     // Check for database connection errors
@@ -29,6 +30,7 @@
 
     else
     {
+        $contact_id = "";
 
         $contact_id = $info["contact_id"];
 

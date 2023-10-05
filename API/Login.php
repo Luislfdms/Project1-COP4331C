@@ -2,11 +2,12 @@
     session_start();
     
     include "Auxillary.php";
-
-    $info = getReqInfo();
     
     // Connect to the database
     $connect = db_connect();
+
+    // Receives User Input as JSON
+    $info = getReqInfo();
 
     // Check for database connection errors
     if ($connect->connect_error)

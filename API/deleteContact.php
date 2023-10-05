@@ -17,19 +17,20 @@
     // Connect to the database
     $connect = db_connect();
 
+    // Receives User Input as JSON
+    $info = getReqInfo();
+
     // Check for database connection errors
     if ($connect->connect_error) 
     {
         retWithErr("Database connection error.\n");
     } 
 
-    else 
+    else
     {
-        // Retrieve contact ID from the user input
-        if (isset($_POST["contact_id"]))
-        {
-            $contact_id = $_POST["contact_id"];
-        }
+        $contact_id = "";
+
+        $contact_id = $info["contact_id"];
 
         // Check if the contact belongs to the logged-in user
         $sql = "SELECT * FROM contacts WHERE contact_id = ? AND user_id = ?";

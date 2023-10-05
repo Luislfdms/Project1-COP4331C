@@ -17,6 +17,9 @@
     // Connect to the database
     $connect = db_connect();
 
+    // Receives User Input as JSON
+    $info = getReqInfo();
+
     // Check for database connection errors
     if ($connect->connect_error) 
     {
@@ -25,13 +28,15 @@
 
     else
     {
-        if (isset($_POST["first_name"]) && isset($_POST["last_name"]) && isset($_POST["email"]) && isset($_POST["phone_number"]))
-        {
-            $fName = $_POST["first_name"];
-            $lName = $_POST["last_name"];
-            $email = $_POST["email"];
-            $phone = $_POST["phone_number"];
-        }
+        $fName = "";
+        $lName = "";
+        $email = "";
+        $phone = "";
+
+        $fName = $info["first_name"];
+        $lName = $info["last_name"];
+        $email = $info["email"];
+        $phone = $info["phone_number"];
 
         if (empty($fName) || empty($lName) || empty($email) || empty($phone))
         {
