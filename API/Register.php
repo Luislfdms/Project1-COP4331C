@@ -3,10 +3,13 @@
     header('Access-Control-Allow-Methods:  POST, GET, OPTIONS');
     header("Access-Control-Allow-Credentials: true");
     header("Access-Control-Allow-Headers: *");
+    
     include "Auxillary.php";
 
     // Connect to the database
     $connect = db_connect();
+
+    $info = getReqInfo();
 
     // Check for database connection errors
     if ($connect->connect_error)
@@ -23,8 +26,8 @@
         // if (isset($_POST["username"]) && isset($_POST["password"]) /* && isset($_POST["confirm_password" ])*/ )
         // {
         //     // Retrieve user input
-            $username = $_POST["username"];
-            $password = $_POST["password"];
+            $username = $info["username"];
+            $password = $info["password"];
             //$confirmPassword = $_POST["confirm_password"];
         // }
 
