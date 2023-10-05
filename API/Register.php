@@ -3,6 +3,7 @@
     header('Access-Control-Allow-Methods:  POST, GET, OPTIONS');
     header("Access-Control-Allow-Credentials: true");
     header("Access-Control-Allow-Headers: *");
+    header('Content-Type: application/json');
     include "Auxillary.php";
 
     // Connect to the database
