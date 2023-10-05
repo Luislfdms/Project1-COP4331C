@@ -35,6 +35,8 @@
         // Collect user input within navigation bar
         $search = $info["search"];
 
+        echo "Before SQL statement";
+        
         // Full and Partial searches
         $sql = "SELECT * FROM CONTACTS WHERE (user_id = ? AND (first_name LIKE '%" 
         . $search . "%' OR last_name LIKE '%" 
@@ -46,10 +48,14 @@
         . $search . "%' OR CONCAT(first_name, ' ', last_name , ' ', email, ' ', phone_number) LIKE '%"
         . $search . "%'));";
 
+        echo "Before sql binds";
+
         $stmt = $connect->prepare($sql);
         $stmt->bind_param("s", $user_id);
         $stmt->execute();
         $result = $stmt->get_result();
+
+        echo "After sql statements";
 
         if ($result->num_rows > 0)
         {
