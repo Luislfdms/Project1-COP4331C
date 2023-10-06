@@ -12,7 +12,7 @@
     // Check for database connection errors
     if ($connect->connect_error)
     {
-        retWithErr("Database connection error.");
+        retWithErr("Database connection error.", 500);
     }
 
     else
@@ -45,7 +45,8 @@
                 // Verify the hashed password & successful login
                 if (password_verify($password, $user_data['password'])) 
                 {
-                    retWithSuccess("Login successful. User_ID: $user_data[user_id]" . "");
+                    sendResInfoAsJson(json_encode(array("user_id" => $stmt->insert_id)))
+                    // retWithSuccess("Login successful. User_ID: $user_data[user_id]" . "");
                 }
 
                 // Failed login

@@ -15,7 +15,7 @@
     // Check for database connection errors
     if ($connect->connect_error)
     {
-        retWithErr("Database connection error.");
+        retWithErr("Database connection error.", 500);
     }
 
     else
@@ -100,7 +100,7 @@
                     // Failed update
                     else 
                     {
-                        retWithContactErr("Failed to update contact with ID: $contact_id.");
+                        retWithContactErr("Failed to update contact with ID: $contact_id.", 500);
                     }
                 
                     // Close the prepared statement

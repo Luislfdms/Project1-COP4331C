@@ -1,17 +1,38 @@
 import {useState} from "react";
 
-const CreateContact = ({onSubmit, submitText="Create Contact", initialContact={}}) => {
+const CreateContact = ({onSubmit, reqOnSubmit, submitText="Create Contact", initialContact={}}) => {
     const [firstName, setFirstName] = useState(initialContact.firstName || "");
     const [lastName, setLastName] = useState(initialContact.lastName || "");
     const [email, setEmail] = useState(initialContact.email || "");
     const [phoneNumber, setPhoneNumber] = useState(initialContact.phoneNumber || "");
     const [isPending, setIsPending] = useState(false);// variable to display is pending message
+    const [error, setError] = useState("");
     
     const handleCreateContact = async(e) => {
       e.preventDefault();
       const newContact = {first_name: firstName, last_name: lastName, email, phone_number: phoneNumber};
+      const request = reqOnSubmit(newContact);
+      if (!request) {
+        setError("Something went wrong.");
+        return;
+      }
       setIsPending(true);
-      await onSubmit(newContact);
+      const response = await request;
+      let json;
+      try {
+        json = await response.json();
+      } catch (e) {
+        console.error(e);
+        setError("The response from the server could not be parsed.");
+      }
+      if (response.ok) {
+        console.log('contact updated', json);
+        window.location.assign("/contacts");
+        return;
+      } else {
+        console.error(json);
+        setError(json.error)
+      }
       setIsPending(false);
     }
 
@@ -52,6 +73,7 @@ const CreateContact = ({onSubmit, submitText="Create Contact", initialContact={}
             />
             <input type="submit" value={submitText} disabled={isPending} />
             {isPending && <div className="pending">Pending...</div> }
+            {error && <div className="error">{error}</div>}
           </form>
         </div>
      );

@@ -15,7 +15,7 @@
     // Check for database connection errors
     if ($connect->connect_error) 
     {
-        retWithErr("Database connection error.");
+        retWithErr("Database connection error.", 500);
     } 
 
     else
@@ -53,7 +53,7 @@
             // Failed deletion
             else
             {
-                retWithErr("Failed to delete Contact: $contact_id.");
+                retWithErr("Failed to delete Contact: $contact_id.", 500);
             }
         }
 

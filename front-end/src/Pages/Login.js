@@ -24,19 +24,24 @@ const Login = () => {
       headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
       body
     });
+    let json;
+    try {
+      json = await result.json();
+    } catch (e) {
+      console.error(e);
+      setErrorMessages({name: "json", message: "The response from the server could not be parsed."})
+      setIsSubmitted(false);
+      return;
+    }
     if (result.ok) {
-      try {
-        const json = await result.json();
-        setCookie("userID", json.user_id);
-        console.log('user logged in', json);
-        window.location.assign("/contacts");
-        return;
-      } catch (e) {
-        console.error(e);
-        setErrorMessages({name: "json", message: "The response from the server could not be parsed."})
-      }
+      setCookie("userID", json.user_id);
+      console.log('user logged in', json);
+      window.location.assign("/contacts");
+      return;
     } else {
-      setErrorMessages({name: "api", message: await result.text()})
+      console.error(json);
+      setErrorMessages({name: "api", message: json.error});
+      setIsSubmitted(false);
     }
   }
   const errors = {
@@ -54,7 +59,7 @@ const Login = () => {
     );
 
   const loginForm = (
-    <div className='loginForm'>
+    <div className='login form'>
       <h2> Enter information to log-in</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -86,10 +91,7 @@ const Login = () => {
     );
           
   return (
-    
-    <div className="login form">
-          {isSubmitted ?  <div>User is successfully logged in</div>: cookies.userID ? <div className="error">You're already signed in!</div> : loginForm} 
-    </div>
+    isSubmitted ?  <div>User is successfully logged in</div>: cookies.userID ? <div className="error">You're already signed in!</div> : loginForm
   );
 }
 

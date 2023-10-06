@@ -15,7 +15,7 @@
     // Check for database connection errors
     if ($connect->connect_error) 
     {
-        retWithErr("Database connection error.");
+        retWithErr("Database connection error.", 500);
     }
 
     else
@@ -82,7 +82,7 @@
                 // Failed insertion
                 else
                 {
-                    retWithContactErr("Failed to add contact.");
+                    retWithContactErr("Failed to add contact.", 500);
                 }
             }
             // Close the database connection

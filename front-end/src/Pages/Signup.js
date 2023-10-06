@@ -35,19 +35,23 @@ function Signup() {
           headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
           body
         });
+        let json;
+        try {
+          json = await result.json();
+        } catch (e) {
+          console.error(e);
+          setErrorMessage({name: "json", message: "The response from the server could not be parsed."})
+          setIsSubmitted(false);
+          return;
+        }
         if (result.ok) {
-          try {
-            const json = await result.json();
-            setCookie("userID", json.user_id);
-            console.log('new user added', json);
-            window.location.assign("/contacts");
-            return;
-          } catch (e) {
-            console.error(e);
-            setErrorMessage({name: "json", message: "The response from the server could not be parsed."})
-          }
+          setCookie("userID", json.user_id);
+          console.log('new user added', json);
+          window.location.assign("/contacts");
+          return;
         } else {
-          setErrorMessage({name: "api", message: await result.text()});
+          console.error(json);
+          setErrorMessage({name: "api", message: json.error});
         }
     } else {
       setErrorMessage({name: "pass", message:error.pass})
@@ -85,16 +89,13 @@ const signupForm = (
         />
 
         <input type="submit" value="Sign up" /> 
+        {errorMessage.message&&<div className="error">{errorMessage.message}</div>}
       </form>
   </div>
 );
   
   return (
-    <div className="signup form">
-      {errorMessage&&<div className="error">{errorMessage.message}</div>}
-      {isSubmitted ? <div>Successfully signed up</div>: cookies.userID ? <div className="error">You're already logged in!</div> : signupForm}
-        {/* {user && <Navigate to="/contacts" replace = {true}/>} */}
-    </div>
+    isSubmitted ? <div>Successfully signed up</div>: cookies.userID ? <div className="error">You're already logged in!</div> : signupForm
   )
 }
 

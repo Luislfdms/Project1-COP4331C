@@ -15,9 +15,17 @@ const SearchResults = () => {
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({user_id: cookies.userID, query})
         }).then(async res => {
-            if (res.ok) {
-                setContacts(await res.json());
-            } else setError(await res.text());
+            try {
+                const json = await res.json();
+                if (res.ok) {
+                    setContacts(json);
+                } else {
+                    console.log(json);
+                    setError(json.error);
+                }
+            } catch (e) {
+                setError("The response from the server could not be parsed.");
+            }
             setIsPending(false);
         })
     }, [cookies.userID, query])

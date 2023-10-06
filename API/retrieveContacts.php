@@ -15,7 +15,7 @@
     // Check for database connection errors
     if ($connect->connect_error) 
     {
-        retWithErr("Database connection error.");
+        retWithErr("Database connection error.", 500);
     }
 
     else
@@ -27,7 +27,7 @@
         $stmt->execute();
         $result = $stmt->get_result();
 
-        if ($result->num_rows > 0)
+        // if ($result->num_rows > 0)
         {
             // Initialize an array to store contact data
             $contacts = array();
@@ -53,10 +53,10 @@
         }
 
         // Failed search
-        else
+        /* else
         {
             retWithContactErr("Contact(s) not found or do not belong to user.");
-        }
+        } */
 
         // Close the database connection
         $connect->close();

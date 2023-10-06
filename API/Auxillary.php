@@ -11,25 +11,28 @@
 
     function sendResInfoAsJson($obj)
     {
-        header('Content-type: application/json');
+        header('Content-Type: application/json');
         echo $obj;
     }
 
-    function retWithContactErr($error)
+    function retWithContactErr($error, $code=403)
     {
-        $retValue = '{"User ID": "","First Name": "", "Last Name": "", "Email": "", "Phone Number: "", "Error": "' . $error . '"}';
+        $retValue = '{"User ID": "","First Name": "", "Last Name": "", "Email": "", "Phone Number: "", "error": "' . $error . '"}';
+        http_response_code($code);
         sendResInfoAsJson($retValue);
     }
 
-    function retWithUserErr($error)
+    function retWithUserErr($error, $code=403)
     {
-        $retValue = '{"User ID": "", "Error": "' . $error . '"}';
+        $retValue = '{"User ID": "", "error": "' . $error . '"}';
+        http_response_code($code);
         sendResInfoAsJson($retValue);
     }
 
-    function retWithErr($error)
+    function retWithErr($error, $code=403)
     {
-        $retValue = '{"Error": "' . $error . '"}';
+        $retValue = '{"error": "' . $error . '"}';
+        http_response_code($code);
         sendResInfoAsJson($retValue);
     }
 

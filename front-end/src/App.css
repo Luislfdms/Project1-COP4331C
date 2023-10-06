@@ -117,6 +117,21 @@ button.destructive:disabled {
   font-size: 1em;
 }
 
+.error {
+  color: #700;
+  background-color: #fdd;
+  padding: 1em;
+}
+.pending {
+  padding: 1em;
+  font-style: italic;
+  background-color: #fff;
+}
+.App > .error:only-child, .App > .pending:only-child {
+  width: 400px;
+  margin: auto;
+}
+
 .contact-list-buttons-fix {
   height: 1em;
 }

@@ -17,10 +17,18 @@ const ContactPreview = ({contact, onDelete}) => {
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({user_id: cookie.userID, contact_id: contact.contact_id})
     });
+    let json;
+    try {
+      json = result.json();
+    } catch (e) {
+      setError("The response from the server could not be parsed.");
+      setIsDeleting(false);
+      return;
+    }
     if (result.ok) {
       await onDelete(contact);
     } else {
-      setError(await result.text());
+      setError(json.error);
       setIsDeleting(false);
     }
   }
@@ -31,6 +39,7 @@ const ContactPreview = ({contact, onDelete}) => {
     <p>{contact.phone_number}</p>
     <button onClick={() => handleEdit(contact)} disabled={isDeleting}>Edit</button>
     <button className="destructive" onClick={() => handleDelete(contact)} disabled={isDeleting}>Delete</button>
+    {error && <div className="error">{error}</div>}
   </div>;
 };
 
