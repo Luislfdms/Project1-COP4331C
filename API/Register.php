@@ -4,36 +4,28 @@
     // Connect to the database
     $connect = db_connect();
 
+    // Receives User Input as JSON
+    $info = getReqInfo();
+
     // Check for database connection errors
-    if ($connect->connect_error) 
+    if ($connect->connect_error)
     {
-        retWithErr("Database connection error.\n");
+        retWithErr("Database connection error.");
     }
 
     else
     {
         $username = "";
         $password = "";
-        $confirmPassword = "";
 
-        if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["confirm_password"]))
-        {                
-            // Retrieve user input
-            $username = $_POST["username"];
-            $password = $_POST["password"];
-            $confirmPassword = $_POST["confirm_password"];
-        }
-
-        // Check if passwords match
-        if ($password != $confirmPassword)
-        {
-            retWithErr("Passwords do not match.\n");
-        }
+        // User input for fields
+        $username = $info["username"];
+        $password = $info["password"];
 
         // Check all fields are filled
-        else if (empty($username) || empty($password) || empty($confirmPassword))
+        if (empty($username) || empty($password))
         {
-            retWithErr("Enter information for all fields.\n");
+            retWithErr("Enter information for all fields.");
         }
 
         else
@@ -49,7 +41,7 @@
 
             if ($stmt->fetch())
             {
-                retWithErr("Username already exists.\n");
+                retWithErr("Username already exists.");
             }
 
             else
@@ -60,16 +52,16 @@
                 $stmt = $connect->prepare($sql);
                 $stmt->bind_param("ss", $username, $hashedPassword);
 
-                // Successful insertion
+                // Successful registration
                 if ($stmt->execute())
-                {
-                    retWithInfo("User registration successful. User_ID: " . $stmt->insert_id . "\n");
+                {   
+                    retWithSuccess("User registration successful. User_ID: $stmt->insert_id");
                 }
 
-                // Failed insertion
+                // Failed registration
                 else
                 {
-                    retWithErr("User registration failed.\n");
+                    retWithUserErr("User registration failed.");
                 }
             }
 

@@ -6,7 +6,7 @@
     // Check if the user is logged in
     if (!isset($_SESSION['user_id'])) 
     {
-        retWithErr("User not logged in.\n");
+        retWithErr("User not logged in.");
         header("Location: Login.php");
         exit();
     }
@@ -17,25 +17,31 @@
     // Connect to the database
     $connect = db_connect();
 
+    // Receives User Input as JSON
+    $info = getReqInfo();
+
     // Check for database connection errors
     if ($connect->connect_error) 
     {
-        retWithErr("Database connection error.\n");
+        retWithErr("Database connection error.");
     }
 
     else
     {
-        if (isset($_POST["first_name"]) && isset($_POST["last_name"]) && isset($_POST["email"]) && isset($_POST["phone_number"]))
-        {
-            $fName = $_POST["first_name"];
-            $lName = $_POST["last_name"];
-            $email = $_POST["email"];
-            $phone = $_POST["phone_number"];
-        }
+        $fName = "";
+        $lName = "";
+        $email = "";
+        $phone = "";
+
+        // User input for fields
+        $fName = $info["first_name"];
+        $lName = $info["last_name"];
+        $email = $info["email"];
+        $phone = $info["phone_number"];
 
         if (empty($fName) || empty($lName) || empty($email) || empty($phone))
         {
-            retWithErr("Missing one or more information fields.\n");
+            retWithErr("Missing one or more information fields.");
         }
 
         else
@@ -49,7 +55,7 @@
 
             if ($result->num_rows > 0)
             {
-                retWithErr("A contact exists that is already associated with this email or phone number.\n");
+                retWithContactErr("A contact exists that is already associated with this email or phone number.");
             }
 
             else
@@ -57,18 +63,34 @@
                 // Insert contact data into the database
                 $sql = "INSERT INTO contacts (user_id, first_name, last_name, email, phone_number) VALUES (?, ?, ?, ?, ?)";
                 $stmt = $connect->prepare($sql);
-                $stmt->bind_param("sssss", $user_id, $fName, $lName, $email, $phone);
+                $stmt->bind_param("sssss", $user_id,  $fName, $lName, $email, $phone);
 
                 // Successful insertion
                 if ($stmt->execute())
                 {
-                    retWithInfo("Contact successfully added. User ID: " . $user_id . " Contact ID: " . $stmt->insert_id . "\n");
+                    // Initialize an array to store contact data
+                    $contacts = array();
+
+                    $contact = array(
+                        "User ID"       => $user_id,
+                        "Contact ID"    => $stmt->insert_id,
+                        "First Name"    => $fName,
+                        "Last Name"     => $lName,
+                        "Email"         => $email,
+                        "Phone Number"  => $phone
+                    );
+            
+                    $contacts[] = $contact;
+            
+                    // Convert the array to JSON
+                    $search = json_encode($contacts);
+                    sendResInfoAsJson($search);
                 }
                 
                 // Failed insertion
                 else
                 {
-                    retWithErr("Failed to add contact.\n");
+                    retWithContactErr("Failed to add contact.");
                 }
             }
             // Close the database connection

@@ -30,22 +30,8 @@
 
     else
     {
-        $search = "";
-
-        // Collect user input within navigation bar
-        $search = $info["search"];
-
-        // Full and Partial searches
-        $sql = "SELECT * FROM contacts WHERE (user_id = ? AND (first_name LIKE '%" 
-        . $search . "%' OR last_name LIKE '%" 
-        . $search . "%' OR email LIKE '%"
-        . $search . "%' OR phone_number LIKE '%"
-        . $search . "%' OR CONCAT(first_name, ' ', last_name) LIKE '%"
-        . $search . "%' OR CONCAT(first_name, ' ', last_name , ' ', email) LIKE '%"
-        . $search . "%' OR CONCAT(first_name, ' ', last_name , ' ', phone_number) LIKE '%"
-        . $search . "%' OR CONCAT(first_name, ' ', last_name , ' ', email, ' ', phone_number) LIKE '%"
-        . $search . "%'));";
-
+        // Searches all contacts associated with user
+        $sql = "SELECT * FROM contacts WHERE user_id = ?";
         $stmt = $connect->prepare($sql);
         $stmt->bind_param("s", $user_id);
         $stmt->execute();
@@ -70,7 +56,7 @@
 
                 $contacts[] = $contact;
             }
-
+            
             // Convert the array to JSON
             $search = json_encode($contacts);
             sendResInfoAsJson($search);

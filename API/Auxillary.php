@@ -1,7 +1,12 @@
 <?php
+    function getReqInfo()
+    {
+        return json_decode(file_get_contents('php://input'), true);
+    }
+
     function db_connect()
     {
-        return new mysqli("localhost","root", "", "group3");
+        return new mysqli("localhost","luis-souto", "Groupslp3!", "contacts_db");
     }
 
     function sendResInfoAsJson($obj)
@@ -10,13 +15,27 @@
         echo $obj;
     }
 
-    function retWithErr($error)
+    function retWithContactErr($error)
     {
-        sendResInfoAsJson($error);
+        $retValue = '{"User ID": "","First Name": "", "Last Name": "", "Email": "", "Phone Number: "", "Error": "' . $error . '"}';
+        sendResInfoAsJson($retValue);
     }
 
-    function retWithInfo($info)
+    function retWithUserErr($error)
     {
-        sendResInfoAsJson($info);
+        $retValue = '{"User ID": "", "Error": "' . $error . '"}';
+        sendResInfoAsJson($retValue);
+    }
+
+    function retWithErr($error)
+    {
+        $retValue = '{"Error": "' . $error . '"}';
+        sendResInfoAsJson($retValue);
+    }
+
+    function retWithSuccess($success)
+    {
+        $retValue = '{"Success": "' . $success . '"}';
+        sendResInfoAsJson($retValue);
     }
 ?>

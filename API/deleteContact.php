@@ -6,7 +6,7 @@
     // Check if the user is logged in
     if (!isset($_SESSION['user_id'])) 
     {
-        retWithErr("User not logged in.\n");
+        retWithErr("User not logged in.");
         header("Location: Login.php");
         exit();
     }
@@ -17,19 +17,21 @@
     // Connect to the database
     $connect = db_connect();
 
+    // Receives User Input as JSON
+    $info = getReqInfo();
+
     // Check for database connection errors
     if ($connect->connect_error) 
     {
-        retWithErr("Database connection error.\n");
+        retWithErr("Database connection error.");
     } 
 
-    else 
+    else
     {
-        // Retrieve contact ID from the user input
-        if (isset($_POST["contact_id"]))
-        {
-            $contact_id = $_POST["contact_id"];
-        }
+        $contact_id = "";
+
+        // User input for field
+        $contact_id = $info["contact_id"];
 
         // Check if the contact belongs to the logged-in user
         $sql = "SELECT * FROM contacts WHERE contact_id = ? AND user_id = ?";
@@ -39,7 +41,7 @@
 
         if (!$stmt->fetch()) 
         {
-            retWithErr("Contact not found or does not belong to the user.\n");
+            retWithErr("Contact with ID: $contact_id not found or does not belong to the user with ID: $user_id.");
         }
 
         else
@@ -53,12 +55,13 @@
             // Successful deletion
             if ($stmt->execute()) 
             {
-                retWithInfo("Contact successfully deleted.\n");
+                retWithSuccess("Contact: $contact_id successfully deleted.");
             } 
             
-            else 
+            // Failed deletion
+            else
             {
-                retWithErr("Failed to delete contact.\n");
+                retWithErr("Failed to delete Contact: $contact_id.");
             }
         }
 

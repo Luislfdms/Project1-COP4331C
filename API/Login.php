@@ -6,10 +6,13 @@
     // Connect to the database
     $connect = db_connect();
 
+    // Receives User Input as JSON
+    $info = getReqInfo();
+
     // Check for database connection errors
     if ($connect->connect_error)
     {
-        retWithErr("Database connection error.\n");
+        retWithErr("Database connection error.");
     }
 
     else
@@ -17,49 +20,51 @@
         $username = "";
         $password = "";
 
-        // Retrieve user input
-        if (isset($_POST["username"]) && isset($_POST["password"]))
+        // User input for fields
+        $username = $info["username"];
+        $password = $info["password"];
+
+        if (empty($username) || empty($password))
         {
-            $username = $_POST["username"];
-            $password = $_POST["password"];
-        }
-
-        else if (empty($username) || empty($password))
-        {
-            retWithErr("Username or password not provided.\n");
-        }
-
-        // Query the database for the username to verify if it exists
-        $sql = "SELECT user_id, username, password FROM users WHERE username = ?";
-        $stmt = $connect->prepare($sql);
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) 
-        {
-            $user_data = $result->fetch_assoc();
-
-            // Verify the hashed password
-            if (password_verify($password, $user_data['password'])) 
-            {
-                $_SESSION['user_id'] = $user_data['user_id'];
-                retWithInfo("Login successful. User_ID: $user_data[user_id]" . "\n");
-            }
-
-            else
-            {
-                retWithErr("Incorrect password.\n");
-            }
+            retWithErr("Username or password not provided.");
         }
 
         else
         {
-            retWithErr("User does not exist.\n");
-        }
+            // Query the database for the username to verify if it exists
+            $sql = "SELECT user_id, username, password FROM users WHERE username = ?";
+            $stmt = $connect->prepare($sql);
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-        // Close the database connection
-        $stmt->close();
-        $connect->close();
+            if ($result->num_rows > 0) 
+            {
+                $user_data = $result->fetch_assoc();
+
+                // Verify the hashed password & successful login
+                if (password_verify($password, $user_data['password'])) 
+                {
+                    $_SESSION['user_id'] = $user_data['user_id'];
+                    retWithSuccess("Login successful. User_ID: $user_data[user_id]" . "");
+                }
+
+                // Failed login
+                else
+                {
+                    retWithErr("Incorrect password.");
+                }
+            }
+
+            // Failed login
+            else
+            {
+                retWithUserErr("User does not exist.");
+            }
+            
+            // Close the database connection
+            $stmt->close();
+            $connect->close();
+        }
     }
 ?>

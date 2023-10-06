@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from "react";
 import {useHistory, Navigate} from "react-router-dom"
+import {useCookies} from "react-cookie"
 
 function Signup() {
   const history = useHistory();
@@ -8,55 +9,33 @@ function Signup() {
   const [passwordTry2,setPasswordTry2] = useState("");
   const [username, setUsername] = useState('');// varieble to get username
   const [password, setPassword] = useState('');//variable to get password
-  const [errorMessage, setErrorMessage] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);    
-
-  function comparePass (passwordTry1,passwordTry2) 
-  {
-    if(passwordTry1 === passwordTry2)
-    {
-      setPassword(passwordTry1);
-      return true
-    }
-    else 
-      return false
-  }
-
-  const error = {
-    pass: "passwords do not match"
-  }
+  const [isPending, setIsPending] = useState(false);// variable to display is pending message
 
   const handleSubmit = async(e) => {
-    const passwordMatch = comparePass(passwordTry1,passwordTry2);
-    if(passwordMatch)
-    {
-      e.preventDefault();
-      var user = { username, password};
+    e.preventDefault();
+    const user = { username, password};
 
-        const result = await fetch('http://localhost:3000/Register.php', {// ****** need to enter API endpoint in order to post user/pw
-          method: 'POST',// tells server that we are sending an object
-          headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
-          body: JSON.stringify(user)
-        })
-        console.log('new user added');
-        setIsSubmitted(true);
-    }
-    else{
-      setErrorMessage({name: "pass", message:error.pass})
-      setIsSubmitted(false);
-    }
-}  
-const signupForm = (
-  <div className="signup form">
-      <h2> Enter information to Sign up</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Username</label>
-        <input 
-          type="text"
-          required
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+    setIsPending(true);
+      const result = await fetch('http://localhost:3000/Register.php', {// ****** need to enter API endpoint in order to post user/pw
+        method: 'POST',// tells server that we are sending an object
+        headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
+        body: JSON.stringify(user)
+      })
+      const resultInJson = await result.json();
+      console.log('new user added');
+      setIsPending(false);
+  }
+  return (
+    <div className="signup form">
+        <h2> Enter information to Sign up</h2>
+        <form onSubmit={handleSubmit}>
+          <label>Username</label>
+          <input 
+            type="text"
+            required
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
 
         <label>Password</label>
         <input 
@@ -76,16 +55,8 @@ const signupForm = (
         name='pass'
         />
 
-        <input type="submit" value="Sign up" /> 
-      </form>
-  </div>
-);
-  
-  return (
-    <div className="signup form">
-      {errorMessage&&<p>{errorMessage.message}</p>}
-      {isSubmitted ? <div>Successfully signed up</div>: signupForm}
-        {/* {user && <Navigate to="/contacts" replace = {true}/>} */}
+          <input type="submit" value="Sign up" /> 
+        </form>
     </div>
   )
 }

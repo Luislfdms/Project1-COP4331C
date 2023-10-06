@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import useFetch from '../Components/UseFetch';
+import { useCookies } from "react-cookie";
 
 const Login = () => {
   const link = 'url';
@@ -9,24 +10,27 @@ const Login = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);    
   
-  const handleSubmit = (e) => {
+  const [cookies, setCookie] = useCookies("userID");
+
+  const handleSubmit = async (e) => {
     var loginCredentials = {username,password}
     e.preventDefault()
 
-    const result = fetch()
-    const userData = result.find((user)=> user.username === loginCredentials.username)
-      if(userData)
-      {
-        if (userData.password !== loginCredentials.password) {
-          setErrorMessages({name: "pass", message:errors.pass});
-        }
-        else{
-          setIsSubmitted(true);
-        }
+    const result = await fetch("/API/Login.php");
+    if (result.ok) {
+      try {
+        const json = await result.json();
+        setCookie("userID", json.user_id);
+        console.log('user logged in', json);
+        window.location.assign("/contacts");
+        return;
+      } catch (e) {
+        console.error(e);
+        setErrorMessages({name: "json", message: "The response from the server could not be parsed."})
       }
-      else{
-        setErrorMessages({name: "uname" , message: errors.uname});
-      }
+    } else {
+      setErrorMessages({name: "api", message: await result.text()})
+    }
   }
   const errors = {
     uname : "invalid username",
@@ -70,14 +74,14 @@ const Login = () => {
         </div>
         <input type="submit" value="Log in" /> 
       </form>
+      <button onClick={redirectSignUp}> sign up </button>
     </div>
     );
           
   return (
     
     <div className="login form">
-          {isSubmitted ?  <div>User is successfully logged in</div>: loginForm} 
-          <button onClick={redirectSignUp}> sign up </button>
+          {isSubmitted ?  <div>User is successfully logged in</div>: cookies.userID ? <div className="error">You're already signed in!</div> : loginForm} 
     </div>
   );
 }

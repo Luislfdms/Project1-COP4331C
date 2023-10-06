@@ -5,28 +5,14 @@ import { Link, Redirect } from "react-router-dom";
 const Contacts = () => {
     const [contacts, setContacts] = useState([]);//contacts useState
     const DEBUG = true;  // temporary!
-
-    const handleDelete = async(id) =>{// deletes item from contact based on specified id
-        const newContacts = contacts.filter(contact => contact.id !== id)
-        setContacts(newContacts);
-        const result = await fetch('http://localhost:3001/contacts', {
-            method: 'POST',
-            header:{
-                'Content-type': "application/json"
-            }, 
-            body: JSON.stringify(newContacts)
-        })
-
-        const resultInJson = await result.json()
-        //need to find a way to post new updated list to database
+    
+    const onDelete = contact => {
+        setContacts(contacts.filter(c => c !== contact));
     }
     const handleDeleteAll = () => {
         const newContacts = []
         setContacts(newContacts);
         // same deal here
-    }
-
-    const handleEditContact = (id) =>{
     }
 
     const handleAddContact = () => {
@@ -36,13 +22,17 @@ const Contacts = () => {
     const fetchUserData = () => 
     {
         if (DEBUG)
-            setContacts([{id: "test-1", firstName: "Firstname", lastName: "Lastname", email: "test-contact-1@example.com", phoneNumber: "555-PHONE-NO"}, ...Array.from({length: 9}, (_, i)=>({id: `test-${i+3}`, firstName: `Name${i}`, lastName: "Surname", email: `test-contact-${i+3}@example.com`, phoneNumber: `555-EXA-MPLE-${i+1}`})), {id: "test-99", firstName: "Name", lastName: "Surname", email: `test-contact-${"9".repeat(99)}@example.com`, phoneNumber: "555-EXA-MPLE"}]);
+            {if (!contacts) setContacts([{contact_id: "test-1", first_name: "Firstname", last_name: "Lastname", email: "test-contact-1@example.com", phone_number: "555-PHONE-NO"}, ...Array.from({length: 9}, (_, i)=>({contact_id: `test-${i+3}`, first_name: `Name${i}`, last_name: "Surname", email: `test-contact-${i+3}@example.com`, phone_number: `555-EXA-MPLE-${i+1}`})), {contact_id: "test-99", first_name: "Name", last_name: "Surname", email: `test-contact-${"9".repeat(99)}@example.com`, phone_number: "555-EXA-MPLE"}]);}
         else
         {
             const fetchData = async () => {
-                const result = await fetch('http://localhost:3001/contacts')
-                const jsonResult = await result.json()
-                setContacts(jsonResult)
+                const result = await fetch('/API/contacts.php')
+                if (result.ok) {
+                    const jsonResult = await result.json()
+                    setContacts(jsonResult)
+                } else {
+                    console.error(result);
+                }
             }
             fetchData()
         }
@@ -54,7 +44,7 @@ const Contacts = () => {
 
     return (  
         <div className="contacts">
-            <ContactList contacts = {contacts} title = "All Contacts!" handleDelete={handleDelete} handleEdit={handleEditContact} handleCreate={handleAddContact} handleDeleteAll={handleDeleteAll}/>
+            <ContactList contacts = {contacts} title = "All Contacts!" handleCreate={handleAddContact} onDelete={onDelete} handleDeleteAll={handleDeleteAll}/>
         </div>
     );
 }
