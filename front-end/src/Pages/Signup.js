@@ -9,33 +9,69 @@ function Signup() {
   const [passwordTry2,setPasswordTry2] = useState("");
   const [username, setUsername] = useState('');// varieble to get username
   const [password, setPassword] = useState('');//variable to get password
-  const [isPending, setIsPending] = useState(false);// variable to display is pending message
+  const [errorMessage, setErrorMessage] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);    
+
+  const [cookies, setCookie] = useCookies("userID");
+
+  function comparePass (passwordTry1,passwordTry2) 
+  {
+    if(passwordTry1 === passwordTry2)
+    {
+      setPassword(passwordTry1);
+      return true
+    }
+    else 
+      return false
+  }
+
+  const error = {
+    pass: "passwords do not match"
+  }
 
   const handleSubmit = async(e) => {
-    e.preventDefault();
-    const user = { username, password};
+    setIsSubmitted(true);
+    const passwordMatch = comparePass(passwordTry1,passwordTry2);
+    if(passwordMatch)
+    {
+      e.preventDefault();
+      var user = { username, password};
 
-    setIsPending(true);
-      const result = await fetch('http://localhost:3000/Register.php', {// ****** need to enter API endpoint in order to post user/pw
-        method: 'POST',// tells server that we are sending an object
-        headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
-        body: JSON.stringify(user)
-      })
-      const resultInJson = await result.json();
-      console.log('new user added');
-      setIsPending(false);
-  }
-  return (
-    <div className="signup form">
-        <h2> Enter information to Sign up</h2>
-        <form onSubmit={handleSubmit}>
-          <label>Username</label>
-          <input 
-            type="text"
-            required
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+        const result = await fetch('/API/Register.php', {
+          method: 'POST',// tells server that we are sending an object
+          headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
+          body: JSON.stringify({username, password})
+        });
+        if (result.ok) {
+          try {
+            const json = await result.json();
+            setCookie("userID", json.user_id);
+            console.log('new user added', json);
+            window.location.assign("/contacts");
+            return;
+          } catch (e) {
+            console.error(e);
+            setErrorMessage({name: "json", message: "The response from the server could not be parsed."})
+          }
+        } else {
+          setErrorMessage({name: "api", message: await result.text()});
+        }
+    } else {
+      setErrorMessage({name: "pass", message:error.pass})
+    }
+    setIsSubmitted(false);
+}  
+const signupForm = (
+  <div className="signup form">
+      <h2> Enter information to Sign up</h2>
+      <form onSubmit={handleSubmit}>
+        <label>Username</label>
+        <input 
+          type="text"
+          required
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
 
         <label>Password</label>
         <input 
@@ -55,8 +91,16 @@ function Signup() {
         name='pass'
         />
 
-          <input type="submit" value="Sign up" /> 
-        </form>
+        <input type="submit" value="Sign up" /> 
+      </form>
+  </div>
+);
+  
+  return (
+    <div className="signup form">
+      {errorMessage&&<div className="error">{errorMessage.message}</div>}
+      {isSubmitted ? <div>Successfully signed up</div>: cookies.userID ? <div className="error">You're already logged in!</div> : signupForm}
+        {/* {user && <Navigate to="/contacts" replace = {true}/>} */}
     </div>
   )
 }
