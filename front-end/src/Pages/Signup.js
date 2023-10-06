@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {useHistory, Navigate} from "react-router-dom"
 import {useCookies} from "react-cookie"
 
@@ -14,16 +14,9 @@ function Signup() {
 
   const [cookies, setCookie] = useCookies("userID");
 
-  function comparePass (passwordTry1,passwordTry2) 
-  {
-    if(passwordTry1 === passwordTry2)
-    {
-      setPassword(passwordTry1);
-      return true
-    }
-    else 
-      return false
-  }
+  useEffect(() => {
+    setPassword(passwordTry1 === passwordTry2 ? passwordTry1 : "");
+  }, [passwordTry1, passwordTry2]);
 
   const error = {
     pass: "passwords do not match"
@@ -31,8 +24,7 @@ function Signup() {
 
   const handleSubmit = async(e) => {
     setIsSubmitted(true);
-    const passwordMatch = comparePass(passwordTry1,passwordTry2);
-    if(passwordMatch)
+    if(username && password)
     {
       e.preventDefault();
       const body = JSON.stringify({username, password});
