@@ -2,25 +2,15 @@
     session_start();
 
     include "Auxillary.php";
-
-    // Check if the user is logged in
-    if (!isset($_SESSION['user_id'])) 
-    {
-        retWithErr("User not logged in.");
-        header("Location: Login.php");
-    }
-
-    else
-    {
-        // Retrieve user ID from the session
-        $user_id = $_SESSION['user_id'];
-    }
-
+    
     // Connect to the database
     $connect = db_connect();
 
     // Receives User Input as JSON
     $info = getReqInfo();
+
+    // Receives User ID from front-end
+    $user_id = $info["user_id"];
 
     // Check for database connection errors
     if ($connect->connect_error) 
