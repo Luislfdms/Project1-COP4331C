@@ -35,12 +35,13 @@ function Signup() {
     if(passwordMatch)
     {
       e.preventDefault();
-      var user = { username, password};
+      const body = JSON.stringify({username, password});
+      console.log(body);
 
         const result = await fetch('/API/Register.php', {
           method: 'POST',// tells server that we are sending an object
           headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
-          body: JSON.stringify({username, password})
+          body
         });
         if (result.ok) {
           try {

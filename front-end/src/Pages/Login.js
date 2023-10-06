@@ -16,7 +16,14 @@ const Login = () => {
     var loginCredentials = {username,password}
     e.preventDefault()
 
-    const result = await fetch("/API/Login.php");
+    const body = JSON.stringify({username, password});
+    console.log(body);
+
+    const result = await fetch("/API/Login.php", {
+      method: 'POST',// tells server that we are sending an object
+      headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
+      body
+    });
     if (result.ok) {
       try {
         const json = await result.json();
