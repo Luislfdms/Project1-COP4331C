@@ -18,9 +18,10 @@ const SearchResults = () => {
             try {
                 const json = await res.json();
                 if (res.ok) {
+                    console.log(json);
                     setContacts(json);
                 } else {
-                    console.log(json);
+                    console.error(json);
                     setError(json.error);
                 }
             } catch (e) {
@@ -29,7 +30,6 @@ const SearchResults = () => {
             setIsPending(false);
         })
     }, [cookies.userID, query])
-
     
     const onDeleteContact = contact => {
         setContacts(contacts.filter(c => c !== contact));

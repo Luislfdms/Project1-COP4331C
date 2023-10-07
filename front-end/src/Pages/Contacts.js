@@ -4,8 +4,8 @@ import { Link, Redirect } from "react-router-dom";
 import {useCookies} from "react-cookie";
 
 const Contacts = () => {
-    const [contacts, setContacts] = useState([]);//contacts useState
-    const DEBUG = false;  // temporary!
+    const [contacts, setContacts] = useState(null);//contacts useState
+    const DEBUG = true;  // temporary!
     const [cookies] = useCookies();
     const [error, setError] = useState("");
     const [isPending, setIsPending] = useState(true);
@@ -26,7 +26,7 @@ const Contacts = () => {
     const fetchUserData = () => 
     {
         if (DEBUG)
-            {if (!contacts) setContacts([{contact_id: "test-1", first_name: "Firstname", last_name: "Lastname", email: "test-contact-1@example.com", phone_number: "555-PHONE-NO"}, ...Array.from({length: 9}, (_, i)=>({contact_id: `test-${i+3}`, first_name: `Name${i}`, last_name: "Surname", email: `test-contact-${i+3}@example.com`, phone_number: `555-EXA-MPLE-${i+1}`})), {contact_id: "test-99", first_name: "Name", last_name: "Surname", email: `test-contact-${"9".repeat(99)}@example.com`, phone_number: "555-EXA-MPLE"}]);}
+            {if (!contacts) setContacts([{contact_id: "test-1", first_name: "Firstname", last_name: "Lastname", email: "test-contact-1@example.com", phone_number: "555-PHONE-NO"}, ...Array.from({length: 9}, (_, i)=>({contact_id: `test-${i+3}`, first_name: `Name${i}`, last_name: "Surname", email: `test-contact-${i+3}@example.com`, phone_number: `555-EXA-MPLE-${i+1}`})), {contact_id: "test-99", first_name: "Name", last_name: "Surname", email: `test-contact-${"9".repeat(99)}@example.com`, phone_number: "555-EXA-MPLE"}]); setIsPending(false)}
         else
         {
             fetch("/API/retrieveContacts.php", {
@@ -45,13 +45,13 @@ const Contacts = () => {
                 } catch (e) {
                     setError("The response from the server could not be parsed.");
                 }
-                setIsPending(false);
-            })
+            }).catch(reason => setError(reason))
+            .finally(()=>setIsPending(false));
         }
     }
     
     useEffect(() => {// use Effect, runs everytime the app renders
-        fetchUserData()
+        if (!contacts) fetchUserData()
     },[contacts])
 
     return (

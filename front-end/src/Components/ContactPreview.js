@@ -9,12 +9,14 @@ const ContactPreview = ({contact, onDelete}) => {
   
   const handleEdit = contact => {
     window.history.pushState({contact}, "", `/edit/${contact.contact_id}`);
+    window.location.reload();
   }
 
   const handleDelete = async contact => {
     setIsDeleting(true);
     const result = await fetch("/API/deleteContact.php", {
       headers: {"Content-Type": "application/json"},
+      method: "POST",
       body: JSON.stringify({user_id: cookie.userID, contact_id: contact.contact_id})
     });
     let json;

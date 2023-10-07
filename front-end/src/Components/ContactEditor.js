@@ -1,10 +1,10 @@
 import {useState} from "react";
 
 const CreateContact = ({onSubmit, reqOnSubmit, submitText="Create Contact", initialContact={}}) => {
-    const [firstName, setFirstName] = useState(initialContact.firstName || "");
-    const [lastName, setLastName] = useState(initialContact.lastName || "");
+    const [firstName, setFirstName] = useState(initialContact.first_name || "");
+    const [lastName, setLastName] = useState(initialContact.last_name || "");
     const [email, setEmail] = useState(initialContact.email || "");
-    const [phoneNumber, setPhoneNumber] = useState(initialContact.phoneNumber || "");
+    const [phoneNumber, setPhoneNumber] = useState(initialContact.phone_number || "");
     const [isPending, setIsPending] = useState(false);// variable to display is pending message
     const [error, setError] = useState("");
     

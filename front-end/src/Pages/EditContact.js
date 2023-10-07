@@ -6,6 +6,7 @@ const EditContact = () => {
   const [cookies] = useCookies("userID");
   const {contactID} = useParams();
 
+  console.log(contactID, window.history.state.contact);
     
     const handleCreateContact = async(newContact) =>
     {
