@@ -55,7 +55,7 @@
                 // Successful registration
                 if ($stmt->execute())
                 {   
-                    sendResInfoAsJson(json_encode(array("user_id" => $stmt->insert_id)))
+                    sendResInfoAsJson(json_encode(array("user_id" => $stmt->insert_id)));
                     // retWithSuccess("User registration successful. User_ID: $stmt->insert_id");
                 }
 
