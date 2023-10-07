@@ -100,7 +100,7 @@
                     // Failed update
                     else 
                     {
-                        retWithContactErr("Failed to update contact with ID: $contact_id.", 500);
+                        retWithErr("Failed to update contact with ID: $contact_id.", 500);
                     }
                 
                     // Close the prepared statement

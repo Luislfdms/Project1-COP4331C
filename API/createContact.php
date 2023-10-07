@@ -82,7 +82,7 @@
                 // Failed insertion
                 else
                 {
-                    retWithContactErr("Failed to add contact.", 500);
+                    retWithErr("Failed to add contact.", 500);
                 }
             }
             // Close the database connection

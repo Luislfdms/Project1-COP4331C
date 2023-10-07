@@ -62,7 +62,7 @@
                 // Failed registration
                 else
                 {
-                    retWithUserErr("User registration failed.", 500);
+                    retWithErr("User registration failed.", 500);
                 }
             }
 

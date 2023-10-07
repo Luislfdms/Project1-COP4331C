@@ -48,7 +48,7 @@
             if ($stmt->execute()) 
             {
                 retWithSuccess("Contact: $contact_id successfully deleted.");
-            } 
+            }
             
             // Failed deletion
             else

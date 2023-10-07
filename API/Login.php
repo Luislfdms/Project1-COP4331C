@@ -59,7 +59,7 @@
             // Failed login
             else
             {
-                retWithUserErr("User does not exist.");
+                retWithErr("User does not exist.");
             }
             
             // Close the database connection

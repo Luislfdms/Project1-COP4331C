@@ -15,20 +15,6 @@
         echo $obj;
     }
 
-    function retWithContactErr($error, $code=403)
-    {
-        $retValue = '{"User ID": "","First Name": "", "Last Name": "", "Email": "", "Phone Number: "", "error": "' . $error . '"}';
-        http_response_code($code);
-        sendResInfoAsJson($retValue);
-    }
-
-    function retWithUserErr($error, $code=403)
-    {
-        $retValue = '{"User ID": "", "error": "' . $error . '"}';
-        http_response_code($code);
-        sendResInfoAsJson($retValue);
-    }
-
     function retWithErr($error, $code=403)
     {
         $retValue = '{"error": "' . $error . '"}';

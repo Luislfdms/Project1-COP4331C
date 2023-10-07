@@ -51,13 +51,6 @@
             $search = json_encode($contacts);
             sendResInfoAsJson($search);
         }
-
-        // Failed search
-        /* else
-        {
-            retWithContactErr("Contact(s) not found or do not belong to user.");
-        } */
-
         // Close the database connection
         $connect->close();
     }
