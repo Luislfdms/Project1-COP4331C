@@ -30,7 +30,7 @@ const Contacts = () => {
         else
         {
             
-            fetch("/API/contacts.php", {
+            fetch("/API/retrieveContacts.php", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({user_id: cookies.userID})

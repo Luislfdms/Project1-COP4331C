@@ -47,6 +47,11 @@
 .searchbar .search-button {
   margin: 0;
   margin-left: .2em;
+  background-color: white;
+}
+.searchbar input:disabled, .searchbar button:disabled {
+  background-color: #b4f0f4;
+  color: #464;
 }
 @media (max-width: 60rem) {
   .App {
