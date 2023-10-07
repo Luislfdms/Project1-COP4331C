@@ -21,7 +21,7 @@
     else
     {
         // Assigned through URL when editing
-        $contact_id = $_GET["contact_id"];
+        $contact_id = $info["contact_id"];
 
         // Check if the contact belongs to the logged-in user
         $sql = "SELECT * FROM contacts WHERE contact_id = ? AND user_id = ?";
