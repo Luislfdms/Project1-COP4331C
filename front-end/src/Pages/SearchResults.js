@@ -1,15 +1,19 @@
 import {useCookies} from "react-cookie";
 import ContactList from "../Components/ContactList.js";
 import {useEffect, useState} from "react";
+import {useLocation, useHistory} from "react-router-dom"
 
 const SearchResults = () => {
-    const query = new URLSearchParams(window.location.search).get("q");
+    const location = useLocation()
+    const query = new URLSearchParams(location.search).get("q");
     const [cookies] = useCookies();
     const [error, setError] = useState("");
     const [isPending, setIsPending] = useState(true);
     const [contacts, setContacts] = useState(null);
+    const history = useHistory();
 
     useEffect(() => {
+        setIsPending(true);
         fetch("/API/searchContact.php", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -29,7 +33,7 @@ const SearchResults = () => {
             }
             setIsPending(false);
         })
-    }, [cookies.userID, query])
+    }, [query, cookies.userID])
     
     const onDeleteContact = contact => {
         setContacts(contacts.filter(c => c !== contact));
@@ -40,7 +44,7 @@ const SearchResults = () => {
         else if (error) return <div className="error">{error}</div>
         else return <ContactList contacts={contacts} title="Search Results" fallback="(No contacts found.)" handleDelete={onDeleteContact} onDelete={onDeleteContact} />
     } else {
-        setTimeout(() => window.location.assign("/contacts"), 5000);
+        setTimeout(() => history.push("/contacts"), 5000);
         return <div className="error">No query specified!</div>
     }
 }

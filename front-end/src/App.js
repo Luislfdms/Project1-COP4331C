@@ -10,45 +10,56 @@ import EditContact from "./Pages/EditContact.js";
 import Logout from "./Pages/Logout.js";
 import { useCookies } from "react-cookie";
 import SearchResults from "./Pages/SearchResults.js";
+import {Redirect} from "react-router-dom";
 
 // default page needs to prompt the user to login or signup
 function App() {
   const [cookies] = useCookies();
+
+  const RequireUser = ({children, loggedOut=false})=>{
+    if (loggedOut === !cookies.userID) {
+      return children;
+    } else return <Redirect to="/" />
+  }
+
   return (
-    <Router>
+    // <Router>
+      <>
         <Navbar />
         <div className="App">
           <Switch>
             <Route exact path = "/">
-              <Home />
+              {cookies.userID ? <Redirect to="/contacts" /> : <Redirect to="/login" />}
+              {/* <Home /> */}
             </Route>
             <Route path = "/login" >
-              <Login />
+              <RequireUser loggedOut><Login /></RequireUser>
             </Route>
             <Route path = "/signup" >
-              <Signup />
+              <RequireUser loggedOut><Signup /></RequireUser>
             </Route>
             <Route path = "/contacts" >
-              <Contacts />
+              <RequireUser><Contacts /></RequireUser>
             </Route>
             <Route path = "/create">
-              <CreateContact />
+              <RequireUser><CreateContact /></RequireUser>
             </Route>
             <Route path="/search">
-              <SearchResults />
+              <RequireUser><SearchResults /></RequireUser>
             </Route>
             <Route path="/logout">
-              <Logout />
+              <RequireUser><Logout /></RequireUser>
             </Route>
             <Route path="/edit/:contactID">
-              <EditContact />
+              <RequireUser><EditContact /></RequireUser>
             </Route>
             <Route>
               <div className="error">Page not found.</div>
             </Route>
           </Switch>
         </div>
-     </Router>
+      </>
+    //  </Router>
     );
 }
 

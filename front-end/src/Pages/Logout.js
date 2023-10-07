@@ -1,11 +1,13 @@
 import {useCookies} from "react-cookie";
+import { useHistory } from "react-router-dom";
 
 const Logout = () => {
-  const [cookies,, removeCookie] = useCookies();
+  const [,, removeCookie] = useCookies();
+  const history = useHistory();
 
   removeCookie("userID");
 
-  window.location.assign("/login");
+  history.push("/login");
 
   return <div className="pending">Logging out...</div>
 };

@@ -1,12 +1,14 @@
 import { useCookies } from "react-cookie";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useHistory } from "react-router-dom";
 import ContactEditor from "../Components/ContactEditor.js";
 
 const EditContact = () => {
   const [cookies] = useCookies("userID");
   const {contactID} = useParams();
+  const location = useLocation()
+  const history = useHistory()
 
-  console.log(contactID, window.history.state.contact);
+  console.log(contactID, location.state.contact);
     
     const handleCreateContact = async(newContact) =>
     {
@@ -24,7 +26,7 @@ const EditContact = () => {
       }
       if (result.ok) {
         console.log('contact updated', json);
-        window.location.assign("/contacts");
+        history.push("/contacts");
       } else {
         console.error(json);
         return json.error;
@@ -37,7 +39,7 @@ const EditContact = () => {
       body: JSON.stringify({...newContact, user_id: cookies.userID, contact_id: contactID})
     });
 
-    return <ContactEditor onSubmit={handleCreateContact} reqOnSubmit={reqEditContact} initialContact={window.history.state.contact} submitText="Edit Contact" />;
+    return <ContactEditor onSubmit={handleCreateContact} reqOnSubmit={reqEditContact} initialContact={location.state.contact} submitText="Update Contact" />;
 }
 
  

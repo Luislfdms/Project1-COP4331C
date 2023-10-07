@@ -1,15 +1,18 @@
 import {useState} from "react";
 import {useCookies} from "react-cookie";
+import { useHistory } from "react-router-dom";
 
 const ContactPreview = ({contact, onDelete}) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState(null);
+  const history = useHistory();
 
   const [cookie] = useCookies();
   
   const handleEdit = contact => {
-    window.history.pushState({contact}, "", `/edit/${contact.contact_id}`);
-    window.location.reload();
+    history.push(`/edit/${contact.contact_id}`, {contact});
+    console.log("navigating!", history)
+    // window.location.reload();
   }
 
   const handleDelete = async contact => {

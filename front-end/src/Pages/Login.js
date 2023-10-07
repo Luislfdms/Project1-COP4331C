@@ -2,13 +2,15 @@ import React from 'react'
 import { useState } from 'react';
 import useFetch from '../Components/UseFetch';
 import { useCookies } from "react-cookie";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const link = 'url';
   const [username,setUsername] = useState("");
   const [password,setPassword] = useState("");
   const [errorMessages, setErrorMessages] = useState(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);    
+  const [isSubmitted, setIsSubmitted] = useState(false); 
+  const history = useHistory();   
   
   const [cookies, setCookie] = useCookies("userID");
 
@@ -34,9 +36,9 @@ const Login = () => {
       return;
     }
     if (result.ok) {
-      setCookie("userID", json.user_id);
+      setCookie("userID", json.user_id, {path: "/"});
       console.log('user logged in', json);
-      window.location.assign("/contacts");
+      history.push("/contacts");
       return;
     } else {
       console.error(json);
@@ -50,7 +52,7 @@ const Login = () => {
   };
   
   const redirectSignUp = () => {
-    return  window.location.assign("/signup")
+    return history.push("/signup")
   }
    
   const renderErrorMessage = (name) =>

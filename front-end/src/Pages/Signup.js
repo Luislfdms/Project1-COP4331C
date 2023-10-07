@@ -46,9 +46,9 @@ function Signup() {
           return;
         }
         if (result.ok) {
-          setCookie("userID", json.user_id);
+          setCookie("userID", json.user_id, {path: "/"});
           console.log('new user added', json);
-          window.location.assign("/contacts");
+          history.push("/contacts");
           return;
         } else {
           console.error(json);

@@ -1,4 +1,5 @@
 import {useState} from "react";
+import { useHistory } from "react-router-dom";
 
 const CreateContact = ({onSubmit, reqOnSubmit, submitText="Create Contact", initialContact={}}) => {
     const [firstName, setFirstName] = useState(initialContact.first_name || "");
@@ -7,6 +8,7 @@ const CreateContact = ({onSubmit, reqOnSubmit, submitText="Create Contact", init
     const [phoneNumber, setPhoneNumber] = useState(initialContact.phone_number || "");
     const [isPending, setIsPending] = useState(false);// variable to display is pending message
     const [error, setError] = useState("");
+    const history = useHistory();
     
     const handleCreateContact = async(e) => {
       e.preventDefault();
@@ -27,7 +29,7 @@ const CreateContact = ({onSubmit, reqOnSubmit, submitText="Create Contact", init
       }
       if (response.ok) {
         console.log('contact updated', json);
-        window.location.assign("/contacts");
+        history.push("/contacts");
         return;
       } else {
         console.error(json);

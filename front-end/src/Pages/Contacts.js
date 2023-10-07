@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import ContactList from "../Components/ContactList";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import {useCookies} from "react-cookie";
 
 const Contacts = () => {
+    const history = useHistory();
     const [contacts, setContacts] = useState(null);//contacts useState
-    const DEBUG = false;  // temporary!
+    const DEBUG = history.location.hostname === "localhost";
     const [cookies] = useCookies();
     const [error, setError] = useState("");
     const [isPending, setIsPending] = useState(true);
@@ -20,7 +21,7 @@ const Contacts = () => {
     }
 
     const handleAddContact = () => {
-        return window.location.assign("/create");
+        return history.push("/create");
     }
     
     const fetchUserData = () => 
