@@ -36,12 +36,12 @@
             while ($row = $result->fetch_assoc())
             {
                 $contact = array(
-                    "User ID"       => $row["user_id"],
-                    "Contact ID"    => $row["contact_id"],
-                    "First Name"    => $row["first_name"],
-                    "Last Name"     => $row["last_name"],
-                    "Email"         => $row["email"],
-                    "Phone Number"  => $row["phone_number"],
+                    "user_id"      => $row["user_id"],
+                    "contact_id"   => $row["contact_id"],
+                    "first_name"   => $row["first_name"],
+                    "last_name"    => $row["last_name"],
+                    "email"        => $row["email"],
+                    "phone_number" => $row["phone_number"],
                 );
 
                 $contacts[] = $contact;

@@ -64,12 +64,12 @@
                     $contacts = array();
 
                     $contact = array(
-                        "User ID"       => $user_id,
-                        "Contact ID"    => $stmt->insert_id,
-                        "First Name"    => $fName,
-                        "Last Name"     => $lName,
-                        "Email"         => $email,
-                        "Phone Number"  => $phone
+                        "user_id"       => $user_id,
+                        "contact_id"    => $stmt->insert_id,
+                        "first_name"    => $fName,
+                        "last_name"     => $lName,
+                        "email"         => $email,
+                        "phone_number"  => $phone
                     );
             
                     $contacts[] = $contact;

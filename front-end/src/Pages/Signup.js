@@ -57,7 +57,7 @@ function Signup() {
       setErrorMessage({name: "pass", message:error.pass})
     }
     setIsSubmitted(false);
-}  
+}
 const signupForm = (
   <div className="signup form">
       <h2> Enter information to Sign up</h2>
