@@ -38,7 +38,7 @@ const SearchResults = () => {
     if (query) {
         if (isPending) return <div className="pending">Loading...</div>
         else if (error) return <div className="error">{error}</div>
-        else return <ContactList contacts={contacts} title="Search Results" fallback="(No contacts found.)" handleDelete={onDeleteContact} />
+        else return <ContactList contacts={contacts} title="Search Results" fallback="(No contacts found.)" handleDelete={onDeleteContact} onDelete={onDeleteContact} />
     } else {
         setTimeout(() => window.location.assign("/contacts"), 5000);
         return <div className="error">No query specified!</div>
