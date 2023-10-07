@@ -29,7 +29,6 @@ const Contacts = () => {
             {if (!contacts) setContacts([{contact_id: "test-1", first_name: "Firstname", last_name: "Lastname", email: "test-contact-1@example.com", phone_number: "555-PHONE-NO"}, ...Array.from({length: 9}, (_, i)=>({contact_id: `test-${i+3}`, first_name: `Name${i}`, last_name: "Surname", email: `test-contact-${i+3}@example.com`, phone_number: `555-EXA-MPLE-${i+1}`})), {contact_id: "test-99", first_name: "Name", last_name: "Surname", email: `test-contact-${"9".repeat(99)}@example.com`, phone_number: "555-EXA-MPLE"}]);}
         else
         {
-            
             fetch("/API/retrieveContacts.php", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},

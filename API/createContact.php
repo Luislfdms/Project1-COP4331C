@@ -47,7 +47,7 @@
 
             if ($result->num_rows > 0)
             {
-                retWithContactErr("A contact exists that is already associated with this email or phone number.");
+                retWithErr("A contact exists that is already associated with this email or phone number.");
             }
 
             else
