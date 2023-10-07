@@ -57,9 +57,9 @@
             else
             {
                 // Check if a email or phone number already exist
-                $sql = "SELECT * FROM contacts WHERE (email = ? OR phone_number = ?) AND user_id = ?";
+                $sql = "SELECT * FROM contacts WHERE (email = ? OR phone_number = ?) AND user_id = ? AND contact_id = ?";
                 $stmt = $connect->prepare($sql);
-                $stmt->bind_param("sss", $email, $phone, $user_id);
+                $stmt->bind_param("sss", $email, $phone, $user_id, $contact_id);
                 $stmt->execute();
                 $result = $stmt->get_result();
 
