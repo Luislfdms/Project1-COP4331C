@@ -24,9 +24,10 @@ function Signup() {
 
   const handleSubmit = async(e) => {
     setIsSubmitted(true);
+    e.preventDefault();
+    
     if(username && password)
     {
-      e.preventDefault();
       const body = JSON.stringify({username, password});
       console.log(body);
 
