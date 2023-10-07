@@ -23,11 +23,11 @@
         $search = "";
 
         // Collect user input within navigation bar
-        $search = $info["search"];
+        $search = $info["query"];
 
         // Full and Partial searches
         $sql = "SELECT * FROM contacts WHERE (user_id = ? AND (first_name LIKE '%" 
-        . $search . "%' OR last_name LIKE '%" 
+        . $search . "%' OR last_name LIKE '%"
         . $search . "%' OR email LIKE '%"
         . $search . "%' OR phone_number LIKE '%"
         . $search . "%' OR CONCAT(first_name, ' ', last_name) LIKE '%"
