@@ -83,7 +83,7 @@ const Login = () => {
             />
         </div>
         <input type="submit" value="Log in" /> 
-        {errorMessages && <div class="error">errorMessages.message</div>}
+        {errorMessages && <div class="error">{errorMessages.message}</div>}
       </form>
       <button onClick={redirectSignUp}> sign up </button>
     </div>
