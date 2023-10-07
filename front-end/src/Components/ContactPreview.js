@@ -7,7 +7,7 @@ const ContactPreview = ({contact, onDelete}) => {
   const [error, setError] = useState(null);
   const history = useHistory();
 
-  const [cookie] = useCookies();
+  const [cookie] = useCookies(["userID"]);
   
   const handleEdit = contact => {
     history.push(`/edit/${contact.contact_id}`, {contact});

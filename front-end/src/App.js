@@ -14,7 +14,7 @@ import {Redirect} from "react-router-dom";
 
 // default page needs to prompt the user to login or signup
 function App() {
-  const [cookies] = useCookies();
+  const [cookies] = useCookies(["userID"]);
 
   const RequireUser = ({children, loggedOut=false})=>{
     if (loggedOut === !cookies.userID) {

@@ -6,7 +6,7 @@ import {useLocation, useHistory} from "react-router-dom"
 const SearchResults = () => {
     const location = useLocation()
     const query = new URLSearchParams(location.search).get("q");
-    const [cookies] = useCookies();
+    const [cookies] = useCookies(["userID"]);
     const [error, setError] = useState("");
     const [isPending, setIsPending] = useState(true);
     const [contacts, setContacts] = useState(null);

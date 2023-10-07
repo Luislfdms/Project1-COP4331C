@@ -3,7 +3,7 @@ import { useParams, useLocation, useHistory } from "react-router-dom";
 import ContactEditor from "../Components/ContactEditor.js";
 
 const EditContact = () => {
-  const [cookies] = useCookies("userID");
+  const [cookies] = useCookies(["userID"]);
   const {contactID} = useParams();
   const location = useLocation()
   const history = useHistory()

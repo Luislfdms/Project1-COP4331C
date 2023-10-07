@@ -3,7 +3,7 @@ import {useCookies} from "react-cookie"
 import {useHistory} from "react-router-dom"
 
 const Home = () => {
-  const [cookies] = useCookies();
+  const [cookies] = useCookies(["userID"]);
   const history = useHistory();
   history.push(cookies.userID ? "/contacts" : "/login")
   return (

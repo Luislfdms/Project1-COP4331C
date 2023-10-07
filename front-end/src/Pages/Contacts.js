@@ -6,8 +6,9 @@ import {useCookies} from "react-cookie";
 const Contacts = () => {
     const history = useHistory();
     const [contacts, setContacts] = useState(null);//contacts useState
-    const DEBUG = history.location.hostname === "localhost";
-    const [cookies] = useCookies();
+    const DEBUG = window.location.hostname === "localhost";
+    console.log(window.location.hostname)
+    const [cookies] = useCookies(["userID"]);
     const [error, setError] = useState("");
     const [isPending, setIsPending] = useState(true);
     

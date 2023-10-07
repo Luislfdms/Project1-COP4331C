@@ -1,13 +1,17 @@
 import {useCookies} from "react-cookie";
 import { useHistory } from "react-router-dom";
+import {useEffect} from "react";
 
 const Logout = () => {
   const [,, removeCookie] = useCookies();
-  const history = useHistory();
+  const history = useHistory(["userID"]);
 
-  removeCookie("userID");
+  useEffect(() => {
+    removeCookie("userID");
 
-  history.push("/login");
+    history.push("/login");
+  })
+  
 
   return <div className="pending">Logging out...</div>
 };

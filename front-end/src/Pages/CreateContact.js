@@ -3,7 +3,7 @@ import ContactEditor from "../Components/ContactEditor.js"
 
 const CreateContact = () => {
 
-  const [cookies] = useCookies("userID");
+  const [cookies] = useCookies(["userID"]);
 
     //const {isPending, setIsPending} = useState(false);
     //const history = useHistory();

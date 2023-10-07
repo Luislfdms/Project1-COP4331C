@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useCookies } from "react-cookie"
 import { Link, useHistory, useLocation } from "react-router-dom";
 
@@ -6,7 +6,7 @@ const Navbar = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const [query, setQuery] = useState(location.pathname === "/search" && searchParams.has("q") ? searchParams.get("q") : "");
-  const [cookies] = useCookies("userID");
+  const [cookies] = useCookies(["userID"]);
   const history = useHistory();
 
   const onSearch = () => {

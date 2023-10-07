@@ -12,7 +12,7 @@ function Signup() {
   const [errorMessage, setErrorMessage] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);    
 
-  const [cookies, setCookie] = useCookies("userID");
+  const [cookies, setCookie] = useCookies(["userID"]);
 
   useEffect(() => {
     setPassword(passwordTry1 === passwordTry2 ? passwordTry1 : "");
@@ -46,7 +46,7 @@ function Signup() {
           return;
         }
         if (result.ok) {
-          setCookie("userID", json.user_id, {path: "/"});
+          setCookie("userID", json.user_id);
           console.log('new user added', json);
           history.push("/contacts");
           return;
