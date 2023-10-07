@@ -7,7 +7,7 @@ const Login = () => {
   const link = 'url';
   const [username,setUsername] = useState("");
   const [password,setPassword] = useState("");
-  const [errorMessages, setErrorMessages] = useState({});
+  const [errorMessages, setErrorMessages] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);    
   
   const [cookies, setCookie] = useCookies("userID");
@@ -75,7 +75,7 @@ const Login = () => {
         <div>
           <label>Password</label>
           <input 
-            type="text"
+            type="password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}

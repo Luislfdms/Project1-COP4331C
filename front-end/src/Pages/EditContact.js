@@ -37,7 +37,7 @@ const EditContact = () => {
       body: JSON.stringify({...newContact, user_id: cookies.userID, contact_id: contactID})
     });
 
-    return <ContactEditor onSubmit={handleCreateContact} reqOnSubmit={reqEditContact} initialContact={window.history.state.contact} />;
+    return <ContactEditor onSubmit={handleCreateContact} reqOnSubmit={reqEditContact} initialContact={window.history.state.contact} submitText="Edit Contact" />;
 }
 
  
