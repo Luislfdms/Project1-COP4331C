@@ -71,7 +71,6 @@ const Login = () => {
             onChange={(e) => setUsername(e.target.value)}
             name='uname'
           />
-          {renderErrorMessage("uname")}
         </div>
         <div>
           <label>Password</label>
@@ -82,9 +81,9 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             name= 'pass'
             />
-            {renderErrorMessage("pass")}
         </div>
         <input type="submit" value="Log in" /> 
+        {errorMessages && <div class="error">errorMessages.message</div>}
       </form>
       <button onClick={redirectSignUp}> sign up </button>
     </div>

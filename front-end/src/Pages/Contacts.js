@@ -5,7 +5,7 @@ import {useCookies} from "react-cookie";
 
 const Contacts = () => {
     const [contacts, setContacts] = useState(null);//contacts useState
-    const DEBUG = true;  // temporary!
+    const DEBUG = false;  // temporary!
     const [cookies] = useCookies();
     const [error, setError] = useState("");
     const [isPending, setIsPending] = useState(true);
