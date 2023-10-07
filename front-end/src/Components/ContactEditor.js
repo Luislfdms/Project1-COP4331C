@@ -1,5 +1,7 @@
 import {useState} from "react";
 import { useHistory } from "react-router-dom";
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 const CreateContact = ({onSubmit, reqOnSubmit, submitText="Create Contact", initialContact={}}) => {
     const [firstName, setFirstName] = useState(initialContact.first_name || "");
@@ -67,8 +69,8 @@ const CreateContact = ({onSubmit, reqOnSubmit, submitText="Create Contact", init
             />
             
             <label>Phone Number</label>
-            <input 
-              type="text"
+            <PhoneInput 
+              country={'us'}
               required
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}

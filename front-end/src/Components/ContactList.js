@@ -1,6 +1,5 @@
 import ContactPreview from "./ContactPreview.js";
 
-
 const ContactList = ({contacts, setContacts, userID, title, onDelete, handleDeleteAll=null, handleCreate=null, fallback="(No contacts yet.)"}) => {
     return ( 
         <div className="contact-list">
