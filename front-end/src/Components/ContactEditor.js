@@ -3,23 +3,29 @@ import { useHistory } from "react-router-dom";
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 
-const CreateContact = ({onSubmit, reqOnSubmit, submitText="Create Contact", initialContact={}}) => {
+const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact={}}) => {
     const [firstName, setFirstName] = useState(initialContact.first_name || "");
     const [lastName, setLastName] = useState(initialContact.last_name || "");
     const [email, setEmail] = useState(initialContact.email || "");
-    const [phoneNumber, setPhoneNumber] = useState(initialContact.phone_number || "");
+    const [formattedPhoneNumber, setFormattedPhoneNumber] = useState(initialContact.phone_number || "")
+    const [phoneNumber, setPhoneNumber] = useState(formattedPhoneNumber.replace(/[^0-9]/g, "") || null);
     const [isPending, setIsPending] = useState(false);// variable to display is pending message
     const [error, setError] = useState("");
     const history = useHistory();
     
     const handleCreateContact = async(e) => {
       e.preventDefault();
-      const newContact = {first_name: firstName, last_name: lastName, email, phone_number: phoneNumber};
+      if (!formattedPhoneNumber) {
+        setError("Please enter a valid phone number.");
+        return;
+      }
+      const newContact = {first_name: firstName, last_name: lastName, email, phone_number: formattedPhoneNumber};
       const request = reqOnSubmit(newContact);
       if (!request) {
         setError("Something went wrong.");
         return;
       }
+      setError("");
       setIsPending(true);
       const response = await request;
       let json;
@@ -28,6 +34,8 @@ const CreateContact = ({onSubmit, reqOnSubmit, submitText="Create Contact", init
       } catch (e) {
         console.error(e);
         setError("The response from the server could not be parsed.");
+        setIsPending(false);
+        return;
       }
       if (response.ok) {
         console.log('contact updated', json);
@@ -76,7 +84,11 @@ const CreateContact = ({onSubmit, reqOnSubmit, submitText="Create Contact", init
               country={'us'}
               required
               value={phoneNumber}
-              onChange={phone => setPhoneNumber(phone)}
+              onChange={(phone, country, e, formattedPhone) => {
+                setPhoneNumber(phone);
+                setFormattedPhoneNumber(country?.format?.replace(/[^.]/g,"").length === phone.length ? formattedPhone : "");
+              }}
+              inputProps={{required: true}}
             />
             </label>
             <input type="submit" value={submitText} disabled={isPending} />
