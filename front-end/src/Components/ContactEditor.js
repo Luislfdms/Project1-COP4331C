@@ -86,7 +86,8 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
               value={phoneNumber}
               onChange={(phone, country, e, formattedPhone) => {
                 setPhoneNumber(phone);
-                setFormattedPhoneNumber(country?.format?.replace(/[^.]/g,"").length === phone.length ? formattedPhone : "");
+                const isValid = true; //country?.format?.replace(/[^.]/g,"").length === phone.length
+                setFormattedPhoneNumber(isValid ? formattedPhone : "");
               }}
               inputProps={{required: true}}
             />
