@@ -73,7 +73,7 @@ const CreateContact = ({onSubmit, reqOnSubmit, submitText="Create Contact", init
               country={'us'}
               required
               value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              onChange={phone => setPhoneNumber(phone)}
             />
             <input type="submit" value={submitText} disabled={isPending} />
             {isPending && <div className="pending">Pending...</div> }
