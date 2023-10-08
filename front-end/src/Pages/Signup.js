@@ -46,7 +46,7 @@ function Signup() {
           return;
         }
         if (result.ok) {
-          setCookie("userID", json.user_id);
+          // setCookie("userID", json.user_id);
           console.log('new user added', json);
           history.push("/contacts");
           return;
