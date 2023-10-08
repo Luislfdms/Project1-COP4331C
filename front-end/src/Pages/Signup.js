@@ -11,6 +11,9 @@ function Signup() {
   const [password, setPassword] = useState('');//variable to get password
   const [errorMessage, setErrorMessage] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);    
+  const [usernameDirtied, setUsernameDirtied] = useState(false);
+  const [password1Dirtied, setPassword1Dirtied] = useState(false);
+  const [password2Dirtied, setPassword2Dirtied] = useState(false);
 
   const [cookies, setCookie] = useCookies(["userID"]);
   const DEBUG = window.location.hostname === "localhost";
@@ -18,17 +21,32 @@ function Signup() {
   useEffect(() => {
     setPassword(passwordTry1 === passwordTry2 ? passwordTry1 : "");
   }, [passwordTry1, passwordTry2]);
+  useEffect(() => setUsernameDirtied(true), [username]);
+  useEffect(() => setPassword1Dirtied(true), [password1]);
+  useEffect(() => setPassword2Dirtied(true), [password2]);
 
   const error = {
     pass: "passwords do not match"
   }
+  
+  const handleInvalid = e => {
+    e.preventDefault();
+    setUsernameDirtied(true);
+    setPassword1Dirtied(true);
+    setPassword2Dirtied(true);
+    const passwordMessage = !password && (!password1 ? "enter a password" : password2 ? "reenter your password" : "ensure your passwords match");
+    setErrorMessages({name: "input", message: `Please ${!username && !password1 ? "enter a username and password" : [!username && "enter a username", passwordMessage].filter(i=>i).join(" and ")}.`});
+  }
 
   const handleSubmit = async(e) => {
-    setIsSubmitted(true);
+    setUsernameDirtied(true);
+    setPassword1Dirtied(true);
+    setPassword2Dirtied(true);
     e.preventDefault();
     
     if(username && password)
     {
+      setIsSubmitted(true);
       const body = JSON.stringify({username, password});
       console.log(body);
 
@@ -56,7 +74,7 @@ function Signup() {
           setErrorMessage({name: "api", message: json.error});
         }
     } else {
-      setErrorMessage({name: "pass", message:error.pass})
+      handleInvalid(e);
     }
     setIsSubmitted(false);
 }
@@ -70,6 +88,8 @@ const signupForm = (
           required
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          onBlur={e => setUsernameDirtied(true)}
+          className={usernameDirtied && !username ? "invalid" : ""}
         />
         </label>
 
@@ -79,8 +99,10 @@ const signupForm = (
           required
           value={passwordTry1}
           onChange={(e) => setPasswordTry1(e.target.value)}
+          onBlur={e => setPassword1Dirtied(true)}
           name='pass'
           maxLength={50}
+          className={password1Dirtied && !password1 ? "invalid" : ""}
           />
         </label>
 
@@ -90,18 +112,22 @@ const signupForm = (
         required
         value={passwordTry2}
         onChange={(e) => setPasswordTry2(e.target.value)}
+        onBlur={e => setPassword2Dirtied(true)}
         name='pass2'
+        maxLength={50}
+        className={password2Dirtied && !password ? "invalid" : ""}
         />
         </label>
 
-        <input type="submit" value="Sign up" /> 
-        {errorMessage.message&&<div className="error">{errorMessage.message}</div>}
+        <input type="submit" value="Sign up" className={username && password ? "primary" : ""}/> 
+        {isSubmitted && <div className="pending">Signing you up...</div>}
+        {errorMessage?.message&&<div className="error">{errorMessage.message}</div>}
       </form>
   </div>
 );
   
   return (
-    isSubmitted ? <div>Successfully signed up</div>: cookies.userID ? <div className="error">You're already logged in!</div> : signupForm
+    cookies.userID ? <div className="error">You're already logged in!</div> : signupForm
   )
 }
 

@@ -13,6 +13,28 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
     const [error, setError] = useState("");
     const history = useHistory();
     
+    const [fNameDirtied, setFNameDirtied] = useState(false);
+    const [lNameDirtied, setLNameDirtied] = useState(false);
+    const [emailDirtied, setEmailDirtied] = useState(false);
+    const [emailValid, setEmailValid] = useState(email !== "");
+    const [phoneDirtied, setPhoneDirtied] = useState(false); 
+    const [phoneOkay, setPhoneOkay] = useState(phoneNumber != null);
+    
+    useEffect(() => setFNameDirtied(true), [firstName]);
+    useEffect(() => setLNameDirtied(true), [lastName]);
+    useEffect(() => setEmailDirtied(true), [email]);
+    useEffect(() => setPhoneDirtied(true), [phoneNumber]);
+    
+    const handleInvalid = e => {
+      e.preventDefault();
+      setFNameDirtied(true);
+      setLNameDirtied(true);
+      setEmailDirtied(true);
+      setPhoneDirtied(true);
+      const missing = [!firstName && "first name", !lastName && "last name", !email ? "email" : !emailValid && "valid email", !phoneNumber && "phone number"].filter(i=>i);
+      setError(`Please enter a ${missing.length > 2 ? missing.slice(0, -1).join(", ") + ", and " + missing[missing.length - 1] : missing.join(" and ")}.`);
+    }
+    
     const handleCreateContact = async(e) => {
       e.preventDefault();
       if (!formattedPhoneNumber) {
@@ -49,16 +71,17 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
     }
 
     return ( 
-        <div className="signup form"> 
+        <form className="signup form" onSubmit={handleCreateContact} onInvalid={handleInvalid}> 
           <h2>Enter Contact Information</h2>
-          <form onSubmit={handleCreateContact}>
             <label>First Name
             <input 
               type="text"
               required
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
+              onBlur={e => setFNameDirtied(true)}
               maxLength={50}
+              className={fNameDirtied && !firstName ? "invalid" : ""}
             />
             </label>
 
@@ -68,7 +91,9 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
               required
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
+              onBlur={e => setLNameDirtied(true)} 
               maxLength={50}
+              className={lNameDirtied && !lastName ? "invalid" : ""}
             />
             </label>
 
@@ -77,8 +102,10 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
               type="email"
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {setEmail(e.target.value); setEmailValid(e.target.checkValidity())}}
+              onBlur={e => setEmailDirtied(true)}
               maxLength={100}
+              className={emailDirtied && !emailValid ? "invalid" : ""}
             />
             </label>
             
@@ -89,17 +116,19 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
               value={phoneNumber}
               onChange={(phone, country, e, formattedPhone) => {
                 setPhoneNumber(phone);
-                const isValid = true; //country?.format?.replace(/[^.]/g,"").length === phone.length
-                setFormattedPhoneNumber(isValid ? formattedPhone : "");
+                const isValid = country?.format?.replace(/[^.]/g,"").length === phone.length;
+                setFormattedPhoneNumber(formattedPhone);
+                setPhoneOkay(isValid);
               }}
+              onBlur={e => setPhoneDirtied(true)}
               inputProps={{required: true}}
+              containerClass={phoneDirtied && !phoneNumber ? "invalid" : phoneDirtied && !phoneOkay ? "likely-invalid" : ""}
             />
             </label>
-            <input type="submit" value={submitText} disabled={isPending} />
+            <input type="submit" value={submitText} disabled={isPending} className={firstName && lastName && emailValid && phoneNumber ? "primary" : ""} />
             {isPending && <div className="pending">Pending...</div> }
             {error && <div className="error">{error}</div>}
-          </form>
-        </div>
+        </form>
      );
 }
 

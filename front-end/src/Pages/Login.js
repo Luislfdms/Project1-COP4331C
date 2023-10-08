@@ -9,6 +9,8 @@ const Login = () => {
   const history = useHistory();
   const [username,setUsername] = useState(history.location.state?.username || "");
   const [password,setPassword] = useState("");
+  const [usernameDirtied, setUsernameDirtied] = useState(false);
+  const [passwordDirtied, setPasswordDirtied] = useState(false);
   const [errorMessages, setErrorMessages] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false); 
   const DEBUG = window.location.hostname === "localhost";
@@ -21,8 +23,20 @@ const Login = () => {
     if (ephemMsgShown) setEphemMsg("");
   }, [username, password, isSubmitted]);
   setTimeout(() => setEphemMsgShown(true), 5000);
+  
+  useEffect(() => setUsernameDirtied(true), [username]);
+  useEffect(() => setPasswordDirtied(true), [password]);
+  
+  const handleInvalid = e => {
+    e.preventDefault();
+    setUsernameDirtied(true);
+    setPasswordDirtied(true);
+    setErrorMessages({name: "input", message: `Please enter a ${[!username && "username", !password && "password"].filter(i=>i).join(" and ")}.`});
+  }
 
   const handleSubmit = async (e) => {
+    setUsernameDirtied(true);
+    setPasswordDirtied(true);
     setEphemMsg("");
     var loginCredentials = {username,password}
     e.preventDefault()
@@ -81,7 +95,7 @@ const Login = () => {
     );
 
   const loginForm = (
-    <form className='login form' onSubmit={handleSubmit}>
+    <form className='login form' onSubmit={handleSubmit} onInvalid={handleInvalid}>
       {ephemMsg && <div className="ephemeral">{ephemMsg}</div>}
       <h2> Enter information to log-in</h2>
       <div>
@@ -91,7 +105,9 @@ const Login = () => {
           required
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          onBlur={e => setUsernameDirtied(true)}
           name='uname'
+          className={usernameDirtied && !username ? "invalid" : ""}
           maxLength={50}
         />
         </label>
@@ -103,11 +119,13 @@ const Login = () => {
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onBlur={e => setPasswordDirtied(true)}
           name= 'pass'
+          className={passwordDirtied && !password ? "invalid" : ""}
           />
         </label>
       </div>
-      <input type="submit" value="Log in" /> 
+      <input type="submit" value="Log in" disabled={errorMessages != null} className={username && password ? "primary" : ""}/> 
       {errorMessages && <div class="error">{errorMessages.message}</div>}
       <button class="signup-button" onClick={redirectSignUp}> sign up </button>
     </form>

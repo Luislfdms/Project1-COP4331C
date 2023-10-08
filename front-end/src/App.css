@@ -97,6 +97,14 @@ button, input[type="submit"], input[type="button"] {
   font-size: 1em;
   background-color: #e7e7e7;
 }
+input[type="submit"] {
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+input[type="submit"].primary {
+  background-color: #14708f;
+  color: white;
+  border-color: #04607f;
+}
 input, button {
   border: 1px solid #cacaca;
 }
@@ -134,6 +142,13 @@ button.destructive:disabled {
   box-sizing: border-box;
   display: block;
   font-size: 1em;
+}
+.form input.invalid {
+  border-color: red;
+}
+/* i don't remember where the border's set so i'll just change all of them */
+.form .likely-invalid, .form .likely-invalid > * {
+  border-color: orange;
 }
 .form > input:last-child, .form > button:last-child {
   margin-bottom: 0;
