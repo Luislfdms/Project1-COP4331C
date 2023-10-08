@@ -6,7 +6,7 @@
 
 .App {
   margin-top: 3.6em;
-  padding: 1em;
+  padding: 1em min(1em, calc((100vw - 400px) / 2));
   text-align: center;
   background-color: #f7f7f7;
   flex-grow: 1;
@@ -26,6 +26,9 @@
   top: 0;
   right: 0;
   align-items: center;
+}
+.Navbar a {
+  color: #00a;
 }
 .home-nav, .signin-info {
   width: 15em;
@@ -53,7 +56,7 @@
   background-color: #b4f0f4;
   color: #464;
 }
-@media (max-width: 60rem) {
+@media (max-width: 45rem) {
   .App {
     margin-top: 9.6em;
   }
@@ -102,7 +105,7 @@ button.destructive:disabled {
   background-color: #ffeaea;
 }
 .form {
-  width: 400px;
+  width: min(400px, calc(100% - 2em));
   margin: auto;
   text-align: center;
   background-color: white;
