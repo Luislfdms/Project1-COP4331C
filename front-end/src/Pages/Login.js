@@ -1,21 +1,29 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useFetch from '../Components/UseFetch';
 import { useCookies } from "react-cookie";
 import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const link = 'url';
-  const [username,setUsername] = useState("");
+  const history = useHistory();
+  const [username,setUsername] = useState(history.location.state.username || "");
   const [password,setPassword] = useState("");
   const [errorMessages, setErrorMessages] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false); 
-  const history = useHistory();   
   const DEBUG = window.location.hostname === "localhost";
+  const [ephemMsg, setEphemMsg] = useState(history.location.state.msg || "");
+  const [ephemMsgShown, setEphemMsgShown] = useState(false);
   
   const [cookies, setCookie] = useCookies(["userID"]);
 
+  useEffect(() => {
+    if (ephemMsgShown) setEphemMsg("");
+  }, [username, password, isSubmitted]);
+  setTimeout(() => setEphemMsgShown(true), 5000);
+
   const handleSubmit = async (e) => {
+    setEphemMsg("");
     var loginCredentials = {username,password}
     e.preventDefault()
     if (DEBUG) {
@@ -69,6 +77,7 @@ const Login = () => {
 
   const loginForm = (
     <div className='login form'>
+      {ephemMsg && <div className="ephemeral">{ephemMsg}</div>}
       <h2> Enter information to log-in</h2>
       <form onSubmit={handleSubmit}>
         <div>
