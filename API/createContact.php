@@ -30,6 +30,7 @@
         $lName = $info["last_name"];
         $email = $info["email"];
         $phone = $info["phone_number"];
+        $date_created = date("m/d/y");
 
         if (empty($fName) || empty($lName) || empty($email) || empty($phone))
         {
@@ -53,9 +54,9 @@
             else
             {
                 // Insert contact data into the database
-                $sql = "INSERT INTO contacts (user_id, first_name, last_name, email, phone_number) VALUES (?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO contacts (user_id, first_name, last_name, email, phone_number, date_created) VALUES (?, ?, ?, ?, ?, ?)";
                 $stmt = $connect->prepare($sql);
-                $stmt->bind_param("sssss", $user_id,  $fName, $lName, $email, $phone);
+                $stmt->bind_param("ssssss", $user_id,  $fName, $lName, $email, $phone, $date_created);
 
                 // Successful insertion
                 if ($stmt->execute())
