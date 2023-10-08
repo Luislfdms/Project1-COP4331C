@@ -20,7 +20,7 @@ const Navbar = () => {
         e.preventDefault();
         onSearch();
       }
-    }} /><button type="submit" alt="Search" className="search-button" onClick={onSearch} disabled={!query}>🔎</button></div>
+    }} /><button type="submit" alt="Search" className="search-button" onClick={onSearch} disabled={!query}>🔎︎</button></div>
     <div className="signin-info">
       {cookies.userID ? <Link to="/logout">Logout</Link> : <><Link to="/login">Login</Link> / <Link to="/signup">Sign up</Link></>}
     </div>

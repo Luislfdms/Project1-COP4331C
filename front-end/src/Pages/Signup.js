@@ -49,7 +49,7 @@ function Signup() {
         if (result.ok) {
           // setCookie("userID", json.user_id);
           console.log('new user added', json);
-          history.push("/login", {msg: "Signed up successfully", username});
+          history.push("/login", {msg: "Signed up successfully.", username});
           return;
         } else {
           console.error(json);
