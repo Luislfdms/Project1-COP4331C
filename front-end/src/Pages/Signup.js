@@ -22,8 +22,8 @@ function Signup() {
     setPassword(passwordTry1 === passwordTry2 ? passwordTry1 : "");
   }, [passwordTry1, passwordTry2]);
   useEffect(() => setUsernameDirtied(true), [username]);
-  useEffect(() => setPassword1Dirtied(true), [password1]);
-  useEffect(() => setPassword2Dirtied(true), [password2]);
+  useEffect(() => setPassword1Dirtied(true), [passwordTry1]);
+  useEffect(() => setPassword2Dirtied(true), [passwordTry2]);
 
   const error = {
     pass: "passwords do not match"
@@ -34,8 +34,8 @@ function Signup() {
     setUsernameDirtied(true);
     setPassword1Dirtied(true);
     setPassword2Dirtied(true);
-    const passwordMessage = !password && (!password1 ? "enter a password" : password2 ? "reenter your password" : "ensure your passwords match");
-    setErrorMessages({name: "input", message: `Please ${!username && !password1 ? "enter a username and password" : [!username && "enter a username", passwordMessage].filter(i=>i).join(" and ")}.`});
+    const passwordMessage = !password && (!passwordTry1 ? "enter a password" : passwordTry2 ? "reenter your password" : "ensure your passwords match");
+    setErrorMessage({name: "input", message: `Please ${!username && !passwordTry1 ? "enter a username and password" : [!username && "enter a username", passwordMessage].filter(i=>i).join(" and ")}.`});
   }
 
   const handleSubmit = async(e) => {
@@ -102,7 +102,7 @@ const signupForm = (
           onBlur={e => setPassword1Dirtied(true)}
           name='pass'
           maxLength={50}
-          className={password1Dirtied && !password1 ? "invalid" : ""}
+          className={password1Dirtied && !passwordTry1 ? "invalid" : ""}
           />
         </label>
 
