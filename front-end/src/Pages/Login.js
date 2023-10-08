@@ -7,12 +7,12 @@ import { useHistory } from "react-router-dom";
 const Login = () => {
   const link = 'url';
   const history = useHistory();
-  const [username,setUsername] = useState(history.location.state.username || "");
+  const [username,setUsername] = useState(history.location.state?.username || "");
   const [password,setPassword] = useState("");
   const [errorMessages, setErrorMessages] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false); 
   const DEBUG = window.location.hostname === "localhost";
-  const [ephemMsg, setEphemMsg] = useState(history.location.state.msg || "");
+  const [ephemMsg, setEphemMsg] = useState(history.location.state?.msg || "");
   const [ephemMsgShown, setEphemMsgShown] = useState(false);
   
   const [cookies, setCookie] = useCookies(["userID"]);
