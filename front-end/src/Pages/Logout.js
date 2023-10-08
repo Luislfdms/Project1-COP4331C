@@ -9,7 +9,7 @@ const Logout = () => {
   useEffect(() => {
     removeCookie("userID");
 
-    history.push("/login");
+    history.push("/login", {msg: "Logged out successfully"});
   })
   
 

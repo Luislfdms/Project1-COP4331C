@@ -13,6 +13,7 @@ function Signup() {
   const [isSubmitted, setIsSubmitted] = useState(false);    
 
   const [cookies, setCookie] = useCookies(["userID"]);
+  const DEBUG = window.location.hostname === "localhost";
 
   useEffect(() => {
     setPassword(passwordTry1 === passwordTry2 ? passwordTry1 : "");
@@ -31,7 +32,7 @@ function Signup() {
       const body = JSON.stringify({username, password});
       console.log(body);
 
-        const result = await fetch('/API/Register.php', {
+        const result = DEBUG ? {ok: 1, json() {}} : await fetch('/API/Register.php', {
           method: 'POST',// tells server that we are sending an object
           headers: { "Content-Type": "application/json" }, // tells server what type of data is being sent
           body
@@ -46,9 +47,9 @@ function Signup() {
           return;
         }
         if (result.ok) {
-          setCookie("userID", json.user_id);
+          // setCookie("userID", json.user_id);
           console.log('new user added', json);
-          history.push("/contacts");
+          history.push("/login", {msg: "Signed up successfully", username});
           return;
         } else {
           console.error(json);
