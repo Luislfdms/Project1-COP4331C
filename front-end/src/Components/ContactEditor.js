@@ -58,6 +58,7 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
               required
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
+              maxLength={50}
             />
             </label>
 
@@ -67,6 +68,7 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
               required
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
+              maxLength={50}
             />
             </label>
 
@@ -76,6 +78,7 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              maxLength={100}
             />
             </label>
             

@@ -88,6 +88,7 @@ const Login = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             name='uname'
+            maxLength={50}
           />
           </label>
         </div>

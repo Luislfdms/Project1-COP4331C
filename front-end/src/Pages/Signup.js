@@ -80,6 +80,7 @@ const signupForm = (
           value={passwordTry1}
           onChange={(e) => setPasswordTry1(e.target.value)}
           name='pass'
+          maxLength={50}
           />
         </label>
 
