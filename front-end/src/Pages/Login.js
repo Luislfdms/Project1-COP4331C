@@ -24,8 +24,8 @@ const Login = () => {
   }, [username, password, isSubmitted]);
   setTimeout(() => setEphemMsgShown(true), 5000);
   
-  useEffect(() => setUsernameDirtied(true), [username]);
-  useEffect(() => setPasswordDirtied(true), [password]);
+  //useEffect(() => setUsernameDirtied(true), [username]);
+  //useEffect(() => setPasswordDirtied(true), [password]);
   
   const handleInvalid = e => {
     e.preventDefault();

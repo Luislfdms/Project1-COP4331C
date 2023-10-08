@@ -21,9 +21,9 @@ function Signup() {
   useEffect(() => {
     setPassword(passwordTry1 === passwordTry2 ? passwordTry1 : "");
   }, [passwordTry1, passwordTry2]);
-  useEffect(() => setUsernameDirtied(true), [username]);
-  useEffect(() => setPassword1Dirtied(true), [passwordTry1]);
-  useEffect(() => setPassword2Dirtied(true), [passwordTry2]);
+  //useEffect(() => setUsernameDirtied(true), [username]);
+  //useEffect(() => setPassword1Dirtied(true), [passwordTry1]);
+  //useEffect(() => setPassword2Dirtied(true), [passwordTry2]);
 
   const error = {
     pass: "passwords do not match"
@@ -34,7 +34,7 @@ function Signup() {
     setUsernameDirtied(true);
     setPassword1Dirtied(true);
     setPassword2Dirtied(true);
-    const passwordMessage = !password && (!passwordTry1 ? "enter a password" : passwordTry2 ? "reenter your password" : "ensure your passwords match");
+    const passwordMessage = !password && (!passwordTry1 ? "enter a password" : ! passwordTry2 ? "reenter your password" : "ensure your passwords match");
     setErrorMessage({name: "input", message: `Please ${!username && !passwordTry1 ? "enter a username and password" : [!username && "enter a username", passwordMessage].filter(i=>i).join(" and ")}.`});
   }
 
@@ -81,7 +81,7 @@ function Signup() {
 const signupForm = (
   <div className="signup form">
       <h2> Enter information to Sign up</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} onInvalid={handleInvalid}>
         <label>Username
         <input 
           type="text"

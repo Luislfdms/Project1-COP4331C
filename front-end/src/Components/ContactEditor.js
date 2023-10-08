@@ -20,10 +20,10 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
     const [phoneDirtied, setPhoneDirtied] = useState(false); 
     const [phoneOkay, setPhoneOkay] = useState(phoneNumber != null);
     
-    useEffect(() => setFNameDirtied(true), [firstName]);
-    useEffect(() => setLNameDirtied(true), [lastName]);
-    useEffect(() => setEmailDirtied(true), [email]);
-    useEffect(() => setPhoneDirtied(true), [phoneNumber]);
+    //useEffect(() => setFNameDirtied(true), [firstName]);
+    //useEffect(() => setLNameDirtied(true), [lastName]);
+    //useEffect(() => setEmailDirtied(true), [email]);
+    //useEffect(() => setPhoneDirtied(true), [phoneNumber]);
     
     const handleInvalid = e => {
       e.preventDefault();
@@ -37,6 +37,10 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
     
     const handleCreateContact = async(e) => {
       e.preventDefault();
+      setFNameDirtied(true);
+      setLNameDirtied(true);
+      setEmailDirtied(true);
+      setPhoneDirtied(true);
       if (!formattedPhoneNumber) {
         setError("Please enter a valid phone number.");
         return;
