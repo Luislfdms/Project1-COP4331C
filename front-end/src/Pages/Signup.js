@@ -64,15 +64,16 @@ const signupForm = (
   <div className="signup form">
       <h2> Enter information to Sign up</h2>
       <form onSubmit={handleSubmit}>
-        <label>Username</label>
+        <label>Username
         <input 
           type="text"
           required
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+        </label>
 
-        <label>Password</label>
+        <label>Password
         <input 
           type="password"
           required
@@ -80,15 +81,17 @@ const signupForm = (
           onChange={(e) => setPasswordTry1(e.target.value)}
           name='pass'
           />
+        </label>
 
-        <label>re-enter Password</label>
+        <label>re-enter Password
         <input 
         type="password"
         required
         value={passwordTry2}
         onChange={(e) => setPasswordTry2(e.target.value)}
-        name='pass'
+        name='pass2'
         />
+        </label>
 
         <input type="submit" value="Sign up" /> 
         {errorMessage.message&&<div className="error">{errorMessage.message}</div>}

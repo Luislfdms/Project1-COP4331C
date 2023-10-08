@@ -81,7 +81,7 @@ const Login = () => {
       <h2> Enter information to log-in</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Username</label>
+          <label>Username
           <input 
             type="text"
             required
@@ -89,9 +89,10 @@ const Login = () => {
             onChange={(e) => setUsername(e.target.value)}
             name='uname'
           />
+          </label>
         </div>
         <div>
-          <label>Password</label>
+          <label>Password
           <input 
             type="password"
             required
@@ -99,6 +100,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             name= 'pass'
             />
+          </label>
         </div>
         <input type="submit" value="Log in" /> 
         {errorMessages && <div class="error">{errorMessages.message}</div>}

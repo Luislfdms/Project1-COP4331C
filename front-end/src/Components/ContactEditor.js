@@ -44,37 +44,41 @@ const CreateContact = ({onSubmit, reqOnSubmit, submitText="Create Contact", init
         <div className="signup form"> 
           <h2>Enter Contact Information</h2>
           <form onSubmit={handleCreateContact}>
-            <label>First Name</label>
+            <label>First Name
             <input 
               type="text"
               required
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
+            </label>
 
-            <label>Last Name</label>
+            <label>Last Name
             <input 
               type="text"
               required
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
+            </label>
 
-            <label>Email</label>
+            <label>Email
             <input 
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            </label>
             
-            <label>Phone Number</label>
+            <label>Phone Number
             <PhoneInput 
               country={'us'}
               required
               value={phoneNumber}
               onChange={phone => setPhoneNumber(phone)}
             />
+            </label>
             <input type="submit" value={submitText} disabled={isPending} />
             {isPending && <div className="pending">Pending...</div> }
             {error && <div className="error">{error}</div>}
