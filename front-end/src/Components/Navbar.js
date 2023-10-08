@@ -14,7 +14,7 @@ const Navbar = () => {
   }
 
   return <nav className="Navbar">
-    <div className="home-nav"><Link to="/">cont<b>x</b></Link></div>
+    <div className="home-nav"><Link to="/">Home<b></b></Link></div>
     <div className="searchbar"><input type="search" placeholder="Search..." className="query" disabled={!cookies.userID} value={query} onChange={e => setQuery(e.target.value)} onKeyDown={e => {
       if (e.key === "Enter" && query) {
         e.preventDefault();
