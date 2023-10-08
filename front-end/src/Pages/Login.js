@@ -27,6 +27,11 @@ const Login = () => {
     var loginCredentials = {username,password}
     e.preventDefault()
     if (DEBUG) {
+      if (username === "FAIL") {
+        setErrorMessages({name: "api", message: "Testing failure!"});
+        setIsSubmitted(false);
+        return;
+      }
       setCookie("userID", 1);
       console.log("logged in (debug)");
       history.push("/contacts");
@@ -76,38 +81,36 @@ const Login = () => {
     );
 
   const loginForm = (
-    <div className='login form'>
+    <form className='login form' onSubmit={handleSubmit}>
       {ephemMsg && <div className="ephemeral">{ephemMsg}</div>}
       <h2> Enter information to log-in</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username
-          <input 
-            type="text"
-            required
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            name='uname'
-            maxLength={50}
+      <div>
+        <label>Username
+        <input 
+          type="text"
+          required
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          name='uname'
+          maxLength={50}
+        />
+        </label>
+      </div>
+      <div>
+        <label>Password
+        <input 
+          type="password"
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          name= 'pass'
           />
-          </label>
-        </div>
-        <div>
-          <label>Password
-          <input 
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            name= 'pass'
-            />
-          </label>
-        </div>
-        <input type="submit" value="Log in" /> 
-        {errorMessages && <div class="error">{errorMessages.message}</div>}
-      </form>
-      <button onClick={redirectSignUp}> sign up </button>
-    </div>
+        </label>
+      </div>
+      <input type="submit" value="Log in" /> 
+      {errorMessages && <div class="error">{errorMessages.message}</div>}
+      <button class="signup-button" onClick={redirectSignUp}> sign up </button>
+    </form>
     );
           
   return (
