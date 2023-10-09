@@ -6,7 +6,7 @@
 
 .App {
   margin-top: 3.6em;
-  padding: 1em;
+  padding: 1em min(1em, calc((100vw - 400px) / 2));
   text-align: center;
   background: rgb(2,0,36);
   background: linear-gradient(131deg, rgba(2,0,36,1) 0%, rgba(5,5,13,1) 13%, rgba(0,212,255,1) 100%);
@@ -33,10 +33,10 @@
 .home-nav, .signin-info {
   position: relative;
   display: inline-block;
-  padding: 10px 20px;
+  height: 23px;
+  padding: 7px 10px;
   background-color: #fff; 
-  color: #444; 
-  font-size: 16px; 
+  color: #00a; 
   border-radius: 5px; 
 }
 
@@ -44,22 +44,32 @@
   text-align: right;
 }
 .searchbar {
-  flex-grow: .3;
+  flex-grow: .5;
   display: flex;
 }
 .searchbar .query {
   flex-grow: 1;
   padding: .4em;
-  border: none;
+  border-color: #54c0cf;
   box-sizing: border-box;
   font-size: 1em;
-  border-radius: 10px;
+  border-radius: 5px 0 0 5px;
 }
 .searchbar .search-button {
   margin: 0;
-  margin-left: .2em;
+  padding: .3em .4em .5em;
+  width: 2em;
+  /* margin-left: .2em; */
+  border-left: 0;
+  border-radius: 0 5px 5px 0;
+  background-color: white;
+  border-color: #54c0cf;
 }
-@media (max-width: 60rem) {
+.searchbar input:disabled, .searchbar button:disabled {
+  background-color: #c4e0e4;
+  color: #505f50;
+}
+@media (max-width: 45rem) {
   .App {
     margin-top: 9.6em;
   }
@@ -70,6 +80,7 @@
   }
   .searchbar {
     flex-grow: 0;
+    width: 100%;
   }
   .home-nav, .signin-info {
     text-align: center;
@@ -86,7 +97,6 @@
 }
 
 button, input[type="submit"], input[type="button"] {
-  border: 0;
   padding: 8px;
   margin: 0 5px;
   border-radius: 8px;
@@ -94,9 +104,21 @@ button, input[type="submit"], input[type="button"] {
   font-size: 1em;
   background-color: #e7e7e7;
 }
+input[type="submit"] {
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+input[type="submit"].primary {
+  background-color: #14708f;
+  color: white;
+  border-color: #04607f;
+}
+input, button {
+  border: 1px solid #cacaca;
+}
 button.destructive {
-  color: rgb(70, 86, 194);
+  color: #a00;
   background-color: #ffe7e7;
+  border-color: #ffcaca;
 }
 button:disabled {
   cursor: default;
@@ -108,7 +130,7 @@ button.destructive:disabled {
   background-color: #ffeaea;
 }
 .form {
-  width: 400px;
+  width: min(400px, calc(100% - 2em));
   margin: auto;
   text-align: center;
   background-color: white;
@@ -119,18 +141,66 @@ button.destructive:disabled {
   text-align: left;
   display: block;
 }
-.form input {
+.form input, .form button {
   width: 100%;
   padding: 6px 10px;
   margin: 10px 0;
-  border: 2cap solid #ddd;
+  border-radius: 5px;
+  height: 35px;
   box-sizing: border-box;
   display: block;
   font-size: 1em;
 }
-
 .form h2 {
-  color:#444;
+  color: #444;
+}
+.form input.invalid {
+  border-color: red;
+}
+/* i don't remember where the border's set so i'll just change all of them */
+.form .likely-invalid, .form .likely-invalid > * {
+  border-color: orange;
+}
+.form > input:last-child, .form > button:last-child {
+  margin-bottom: 0;
+}
+.form label + input, .form label input {
+  margin-top: 5px;
+}
+.form .react-tel-input {
+  display: flex;
+  margin: 5px 0 10px;
+}
+.form .react-tel-input .form-control {
+  flex-grow: 1;
+  outline: revert;
+}
+.form .react-tel-input .selected-flag {
+  outline: revert;
+}
+.form.login .signup-button {
+  background: #f5f5f5;
+  margin-top: 20px;
+}
+
+.error {
+  color: #700;
+  background-color: #fdd;
+  padding: 1em;
+}
+.pending {
+  padding: 1em;
+  font-style: italic;
+  background-color: #fff;
+}
+.ephemeral {
+  background-color: #f7f7f7;
+  padding: 1em;
+  font-style: italic;
+}
+.App > .error:only-child, .App > .pending:only-child {
+  width: 400px;
+  margin: auto;
 }
 
 .contact-list-buttons-fix {
