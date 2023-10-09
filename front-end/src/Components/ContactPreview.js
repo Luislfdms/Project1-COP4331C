@@ -6,6 +6,7 @@ const ContactPreview = ({contact, onDelete}) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState(null);
   const history = useHistory();
+  const DEBUG = window.location.hostname === "localhost";
 
   const [cookie] = useCookies(["userID"]);
   
@@ -23,7 +24,7 @@ const ContactPreview = ({contact, onDelete}) => {
       setIsDeleting(false);
       return;
     }
-    const result = await fetch("/API/deleteContact.php", {
+    const result = DEBUG ? {ok: 1, json(){}} : await fetch("/API/deleteContact.php", {
       headers: {"Content-Type": "application/json"},
       method: "POST",
       body: JSON.stringify({user_id: cookie.userID, contact_id: contact.contact_id})

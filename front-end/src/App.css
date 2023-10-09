@@ -246,7 +246,9 @@ button.secondary:hover, button.secondary:focus {
   background: rgb(5,3,39);
   background: linear-gradient(131deg, rgb(22,20,46) 0%, rgb(25,25,33) 13%, rgb(0,132,175) 100%);
   border-radius: 20px;
-  padding: 1em 0;
+  padding: 1em;
+  color: #eef;
+  min-width: min(calc(100vw - 2em), 50em)
 }
 .contact-list-buttons-fix {
   height: 1em;
@@ -256,12 +258,15 @@ button.secondary:hover, button.secondary:focus {
     float: left;
     width: 11em;
     text-align: left;
-    margin-left: 5vw;
+    margin-left: 0;
+  }
+  .contact-list-buttons button:first-child {
+    margin-left: 0;
   }
   .contact-list-buttons:not(:empty) + .contact-list-buttons-fix {
     float: right;
     width: 11em;
-    margin-right: 5vw;
+    margin-right: 0;
     height: 3em;
   }
 }
@@ -285,6 +290,7 @@ button.secondary:hover, button.secondary:focus {
   width: 25em;
   padding: 1em;
   border-radius: 1em;
+  color: black;
 }
 .contact-preview.deleting {
   color: #777;
