@@ -111,15 +111,15 @@ button, input[type="submit"], input[type="button"] {
   border-radius: 8px;
   cursor: pointer;
   font-size: 1em;
-  background-color: #e0e0f0;
+  background-color: #d0d0e0;
 }
 input, button {
-  border: 1px solid #cacad7;
+  border: 1px solid #babac7;
 }
 button:hover, input[type="submit"]:hover, input[type="button"]:hover, .search-button:not(:disabled):hover,
 button:focus, input[type="submit"]:focus, input[type="button"]:focus, .search-button:not(:disabled):focus {
-  background-color: #d7d7e7;
-  border-color: #c0c0df;
+  background-color: #c7c7d7;
+  border-color: #b0b0cf;
 }
 input[type="submit"] {
   transition: background-color .2s, color .2s, border-color .2s;
@@ -136,28 +136,28 @@ button.primary:focus, input[type="submit"].primary:focus {
 }
 button.destructive {
   color: #a00;
-  background-color: #f7e0e0;
-  border-color: #ffcaca;
+  background-color: #e7d0d0;
+  border-color: #efbaba;
 }
 button.destructive:hover, button.destructive:focus {
-  background-color: #f0d7d7;
-  border-color: #fbb;
+  background-color: #d7c0c0;
+  border-color: #caa;
 }
 button:disabled {
   cursor: default;
   color: #888;
-  background-color: #d7d7e0;
+  background-color: #c7c7d0;
 }
 button.destructive:disabled {
   color: #f77;
-  background-color: #f0e0e0;
+  background-color: #e0d0d0;
 }
 button.secondary {
-  background-color: #d0d0d7;
+  background-color: #c0c0c7;
   margin-top: 20px;
 }
 button.secondary:hover, button.secondary:focus {
-  background-color: #c7c7d0;
+  background-color: #b7b7c0;
 }
 .form {
   width: min(400px, calc(100% - 2em));
@@ -209,11 +209,6 @@ button.secondary:hover, button.secondary:focus {
 }
 .form .react-tel-input .selected-flag {
   outline: revert;
-}
-
-.title {
-  color: #ccf;
-  font-weight: normal;
 }
 
 .error {
@@ -282,6 +277,10 @@ button.secondary:hover, button.secondary:focus {
   width: 25em;
   padding: 1em;
   border-radius: 1em;
+}
+.contact-preview.deleting {
+  color: #777;
+  background: #dde;
 }
 .contact-preview p {
   font-size: 1.1em;

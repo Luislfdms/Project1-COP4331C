@@ -17,6 +17,12 @@ const ContactPreview = ({contact, onDelete}) => {
 
   const handleDelete = async contact => {
     setIsDeleting(true);
+    // wait for next tick
+    await new Promise(res => setTimeout(res, 0));
+    if (!window.confirm(`Really delete the contact for ${contact.first_name} ${contact.last_name}?`)) {
+      setIsDeleting(false);
+      return;
+    }
     const result = await fetch("/API/deleteContact.php", {
       headers: {"Content-Type": "application/json"},
       method: "POST",
@@ -38,7 +44,7 @@ const ContactPreview = ({contact, onDelete}) => {
     }
   }
 
-  return <div className={isDeleting ? "contact-preview pending" : "contact-preview"} key = {contact.id}>
+  return <div className={isDeleting ? "contact-preview deleting" : "contact-preview"} key = {contact.id}>
     <h2>{contact.first_name} {contact.last_name}</h2>
     <p>{contact.email}</p>
     <p>{contact.phone_number}</p>
