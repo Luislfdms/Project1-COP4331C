@@ -136,6 +136,7 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
             <input type="submit" value={submitText} disabled={isPending} className={firstName && lastName && emailValid && phoneNumber ? "primary" : ""} onClick={e => e.target.className === "primary" || handleInvalid(e)} />
             {isPending && <div className="pending">Pending...</div> }
             {error && <div className="error">{error}</div>}
+            <button type="button" className="secondary" onClick={e => history.go(-1)}>Cancel</button>
         </form>
      );
 }

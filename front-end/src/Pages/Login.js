@@ -102,7 +102,7 @@ const Login = () => {
     <img src="/logo.png" className="logo" alt="ContX" height={171} />
     <form className='login form' onSubmit={handleSubmit}>
       {ephemMsg && <div className="ephemeral">{ephemMsg}</div>}
-      <h2> Enter information to log-in</h2>
+      <h2>Enter login information</h2>
       <div>
         <label>Username
         <input 
@@ -131,8 +131,8 @@ const Login = () => {
         </label>
       </div>
       <input type="submit" value="Log in" disabled={errorMessages != null} className={username && password ? "primary" : ""} onClick={e => e.target.className === "primary" || handleInvalid(e)}/> 
-      {errorMessages && <div class="error">{errorMessages.message}</div>}
-      <button class="secondary" onClick={redirectSignUp}> sign up </button>
+      {errorMessages && <div className="error">{errorMessages.message}</div>}
+      <button className="secondary" onClick={redirectSignUp}>Sign up</button>
     </form>
   </div>
     );

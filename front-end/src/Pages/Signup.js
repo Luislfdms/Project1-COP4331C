@@ -85,7 +85,7 @@ const signupForm = (
   <div className="form-container">
     <img src="/logo.png" className="logo" alt="ContX" height={171} />
     <form className="signup form" onSubmit={handleSubmit}>
-      <h2> Enter information to Sign up</h2>
+      <h2>Enter signup information</h2>
         <label>Username
         <input 
           type="text"
