@@ -98,6 +98,8 @@ const Login = () => {
     );
 
   const loginForm = (
+  <div className="form-container">
+    <img src="/logo.png" className="logo" alt="ContX" height={171} />
     <form className='login form' onSubmit={handleSubmit}>
       {ephemMsg && <div className="ephemeral">{ephemMsg}</div>}
       <h2> Enter information to log-in</h2>
@@ -132,6 +134,7 @@ const Login = () => {
       {errorMessages && <div class="error">{errorMessages.message}</div>}
       <button class="secondary" onClick={redirectSignUp}> sign up </button>
     </form>
+  </div>
     );
           
   return (

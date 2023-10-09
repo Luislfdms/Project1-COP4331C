@@ -159,10 +159,15 @@ button.secondary {
 button.secondary:hover, button.secondary:focus {
   background-color: #97b0d7;
 }
-.form {
-  width: min(400px, calc(100% - 2em));
+.form-container, .form {
   margin: auto;
   text-align: center;
+}
+.logo {
+  margin-bottom: 2em;
+}
+.form {
+  width: min(400px, calc(100vw - 2em));
   background-color: white;
   background: var(--fg-gradient);
   padding: 1em;

@@ -37,6 +37,7 @@ const ContactPreview = ({contact, onDelete}) => {
       return;
     }
     if (result.ok) {
+      setIsDeleting(false);
       await onDelete(contact);
     } else {
       setError(json.error);
