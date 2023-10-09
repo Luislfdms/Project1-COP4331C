@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  --fg-gradient: linear-gradient(131deg, #e7e7f7 0%, #e7e7ff 87%, #f0f0ff 100%);
 }
 
 .App {
@@ -9,7 +10,7 @@
   padding: 1em min(1em, calc((100vw - 400px) / 2));
   text-align: center;
   background: rgb(2,0,36);
-  background: linear-gradient(131deg, rgba(2,0,36,1) 0%, rgba(5,5,13,1) 13%, rgba(0,212,255,1) 100%);
+  background: linear-gradient(131deg, rgb(2,0,36) 0%, rgb(5,5,13) 13%, rgb(0,212,255) 100%);
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -17,8 +18,9 @@
 .Navbar {
   display: flex;
   background: rgb(2,0,36);
-  background: linear-gradient(131deg, rgba(2,0,36,1) 0%, rgba(5,5,13,1) 13%, rgba(0,212,255,1) 100%);
-  border-bottom: solid 2px white;
+  background: linear-gradient(131deg, rgb(5,3,39) 0%, rgb(10,10,18) 13%, rgb(0,132,175) 100%);
+  border-bottom: solid rgb(5,60,86) 2px;
+  /* border-image: linear-gradient(0deg, rgb(0,132,175), #0000); */
   justify-content: space-between;
   font-weight: bold;
   font-size: 1.2em;
@@ -35,7 +37,8 @@
   display: inline-block;
   height: 23px;
   padding: 7px 10px;
-  background-color: #fff; 
+  background-color: #fff;
+  background: var(--fg-gradient); 
   color: #00a; 
   border-radius: 5px; 
 }
@@ -102,7 +105,15 @@ button, input[type="submit"], input[type="button"] {
   border-radius: 8px;
   cursor: pointer;
   font-size: 1em;
-  background-color: #e7e7e7;
+  background-color: #e7e7f7;
+}
+input, button {
+  border: 1px solid #cacad7;
+}
+button:hover, input[type="submit"]:hover, input[type="button"]:hover, .search-button:not(:disabled):hover,
+button:focus, input[type="submit"]:focus, input[type="button"]:focus, .search-button:not(:disabled):focus {
+  background-color: #ddf;
+  border-color: #c0c0df;
 }
 input[type="submit"] {
   transition: background-color .2s, color .2s, border-color .2s;
@@ -112,13 +123,19 @@ button.primary, input[type="submit"].primary {
   color: white;
   border-color: #04607f;
 }
-input, button {
-  border: 1px solid #cacaca;
+button.primary:hover, input[type="submit"].primary:hover,
+button.primary:focus, input[type="submit"].primary:focus {
+  background-color: #168;
+  border-color: #057;
 }
 button.destructive {
   color: #a00;
   background-color: #ffe7e7;
   border-color: #ffcaca;
+}
+button.destructive:hover, button.destructive:focus {
+  background-color: #fdd;
+  border-color: #fbb;
 }
 button:disabled {
   cursor: default;
@@ -134,6 +151,7 @@ button.destructive:disabled {
   margin: auto;
   text-align: center;
   background-color: white;
+  background: var(--fg-gradient);
   padding: 1em;
   border-radius: 10px;
 }
@@ -156,9 +174,11 @@ button.destructive:disabled {
 }
 .form input.invalid {
   border-color: red;
+  background: #fff7f7;
 }
 .App .form .likely-invalid > * {
   border-color: orange;
+  background: #fffaf7;
 }
 .form > input:last-child, .form > button:last-child {
   margin-bottom: 0;
@@ -183,16 +203,19 @@ button.secondary {
 }
 
 .error {
+  border: solid #fcc 1px;
   color: #700;
   background-color: #fdd;
   padding: 1em;
 }
 .pending {
+  border: solid #eee 1px;
   padding: 1em;
   font-style: italic;
   background-color: #fff;
 }
 .ephemeral {
+  border: solid #ddd 1px;
   background-color: #f7f7f7;
   padding: 1em;
   font-style: italic;
@@ -202,6 +225,12 @@ button.secondary {
   margin: auto;
 }
 
+.contact-list {
+  background: rgb(5,3,39);
+  background: linear-gradient(131deg, rgb(22,20,46) 0%, rgb(25,25,33) 13%, rgb(0,132,175) 100%);
+  border-radius: 20px;
+  padding: 1em 0;
+}
 .contact-list-buttons-fix {
   height: 1em;
 }
@@ -219,8 +248,12 @@ button.secondary {
     height: 3em;
   }
 }
-.contact-list-title, .contact-preview h2 {
+.contact-list-title, h2:first-child {
   margin-top: 0;
+}
+.contact-list-title {
+  /* eef. */
+  color: #eef;
 }
 .contact-list-body {
   display: flex;
@@ -231,8 +264,10 @@ button.secondary {
 }
 .contact-preview {
   background-color: white;
+  background: var(--fg-gradient);
   width: 25em;
   padding: 1em;
+  border-radius: 1em;
 }
 .contact-preview p {
   font-size: 1.1em;
