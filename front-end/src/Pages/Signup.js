@@ -24,6 +24,9 @@ function Signup() {
   //useEffect(() => setUsernameDirtied(true), [username]);
   //useEffect(() => setPassword1Dirtied(true), [passwordTry1]);
   //useEffect(() => setPassword2Dirtied(true), [passwordTry2]);
+    useEffect(() => {
+      if (username && password) setErrorMessage(null);
+    }, [username, password]);
 
   const error = {
     pass: "passwords do not match"
@@ -81,7 +84,7 @@ function Signup() {
 const signupForm = (
   <div className="signup form">
       <h2> Enter information to Sign up</h2>
-      <form onSubmit={handleSubmit} onInvalid={handleInvalid}>
+      <form onSubmit={handleSubmit}>
         <label>Username
         <input 
           type="text"
@@ -119,7 +122,7 @@ const signupForm = (
         />
         </label>
 
-        <input type="submit" value="Sign up" className={username && password ? "primary" : ""}/> 
+        <input type="submit" value="Sign up" className={username && password ? "primary" : ""} onClick={e => e.target.className === "primary" || handleInvalid(e)}/> 
         {isSubmitted && <div className="pending">Signing you up...</div>}
         {errorMessage?.message&&<div className="error">{errorMessage.message}</div>}
       </form>

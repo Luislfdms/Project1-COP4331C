@@ -26,6 +26,9 @@ const Login = () => {
   
   //useEffect(() => setUsernameDirtied(true), [username]);
   //useEffect(() => setPasswordDirtied(true), [password]);
+    useEffect(() => {
+      if (username && password) setErrorMessages(null);
+    }, [username, password]);
   
   const handleInvalid = e => {
     e.preventDefault();
@@ -95,7 +98,7 @@ const Login = () => {
     );
 
   const loginForm = (
-    <form className='login form' onSubmit={handleSubmit} onInvalid={handleInvalid}>
+    <form className='login form' onSubmit={handleSubmit}>
       {ephemMsg && <div className="ephemeral">{ephemMsg}</div>}
       <h2> Enter information to log-in</h2>
       <div>
@@ -125,9 +128,9 @@ const Login = () => {
           />
         </label>
       </div>
-      <input type="submit" value="Log in" disabled={errorMessages != null} className={username && password ? "primary" : ""}/> 
+      <input type="submit" value="Log in" disabled={errorMessages != null} className={username && password ? "primary" : ""} onClick={e => e.target.className === "primary" || handleInvalid(e)}/> 
       {errorMessages && <div class="error">{errorMessages.message}</div>}
-      <button class="signup-button" onClick={redirectSignUp}> sign up </button>
+      <button class="secondary" onClick={redirectSignUp}> sign up </button>
     </form>
     );
           

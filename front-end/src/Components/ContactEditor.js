@@ -24,6 +24,9 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
     //useEffect(() => setLNameDirtied(true), [lastName]);
     //useEffect(() => setEmailDirtied(true), [email]);
     //useEffect(() => setPhoneDirtied(true), [phoneNumber]);
+    useEffect(() => {
+      if (firstName && lastName && emailValid && phoneNumber) setError("");
+    }, [firstName, lastName, email, phoneNumber]);
     
     const handleInvalid = e => {
       e.preventDefault();
@@ -32,7 +35,8 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
       setEmailDirtied(true);
       setPhoneDirtied(true);
       const missing = [!firstName && "first name", !lastName && "last name", !email ? "email" : !emailValid && "valid email", !phoneNumber && "phone number"].filter(i=>i);
-      setError(`Please enter a ${missing.length > 2 ? missing.slice(0, -1).join(", ") + ", and " + missing[missing.length - 1] : missing.join(" and ")}.`);
+      if (e.target.type === "submit")
+        setError(missing.length ? `Please enter a ${missing.length > 2 ? missing.slice(0, -1).join(", ") + ", and " + missing[missing.length - 1] : missing.join(" and ")}.` : "");
     }
     
     const handleCreateContact = async(e) => {
@@ -75,7 +79,7 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
     }
 
     return ( 
-        <form className="signup form" onSubmit={handleCreateContact} onInvalid={handleInvalid}> 
+        <form className="signup form" onSubmit={handleCreateContact}> 
           <h2>Enter Contact Information</h2>
             <label>First Name
             <input 
@@ -129,7 +133,7 @@ const CreateContact = ({reqOnSubmit, submitText="Create Contact", initialContact
               containerClass={phoneDirtied && !phoneNumber ? "invalid" : phoneDirtied && !phoneOkay ? "likely-invalid" : ""}
             />
             </label>
-            <input type="submit" value={submitText} disabled={isPending} className={firstName && lastName && emailValid && phoneNumber ? "primary" : ""} />
+            <input type="submit" value={submitText} disabled={isPending} className={firstName && lastName && emailValid && phoneNumber ? "primary" : ""} onClick={e => e.target.className === "primary" || handleInvalid(e)} />
             {isPending && <div className="pending">Pending...</div> }
             {error && <div className="error">{error}</div>}
         </form>

@@ -107,7 +107,7 @@ button, input[type="submit"], input[type="button"] {
 input[type="submit"] {
   transition: background-color .2s, color .2s, border-color .2s;
 }
-input[type="submit"].primary {
+button.primary, input[type="submit"].primary {
   background-color: #14708f;
   color: white;
   border-color: #04607f;
@@ -157,8 +157,7 @@ button.destructive:disabled {
 .form input.invalid {
   border-color: red;
 }
-/* i don't remember where the border's set so i'll just change all of them */
-.form .likely-invalid, .form .likely-invalid > * {
+.App .form .likely-invalid > * {
   border-color: orange;
 }
 .form > input:last-child, .form > button:last-child {
@@ -178,7 +177,7 @@ button.destructive:disabled {
 .form .react-tel-input .selected-flag {
   outline: revert;
 }
-.form.login .signup-button {
+button.secondary {
   background: #f5f5f5;
   margin-top: 20px;
 }

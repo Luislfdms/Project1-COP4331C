@@ -5,7 +5,7 @@ const ContactList = ({contacts, setContacts, userID, title, onDelete, handleDele
         <div className="contact-list">
             <div className="contact-list-header">
                 <div className="contact-list-buttons">
-                    {handleCreate && <button onClick={handleCreate}>Create</button>}
+                    {handleCreate && <button onClick={handleCreate} className="primary">Create</button>}
                     {/* {handleDeleteAll && <button className="destructive" onClick={handleDeleteAll} disabled={!contacts?.length}>Delete All</button>} */}
                 </div>
                 <div className="contact-list-buttons-fix" />
