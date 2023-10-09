@@ -290,7 +290,7 @@ button.secondary:hover, button.secondary:focus {
 .contact-preview {
   background-color: white;
   background: var(--fg-gradient);
-  width: 25em;
+  width: min(25em, calc(100vw - 4em));
   padding: 1em;
   border-radius: 1em;
   color: black;
