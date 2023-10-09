@@ -135,7 +135,9 @@ const Login = () => {
     );
           
   return (
-    isSubmitted ?  <div>User is successfully logged in</div>: cookies.userID ? <div className="error">You're already signed in!</div> : loginForm
+    isSubmitted ?  <div>User is successfully logged in</div>
+    : cookies.userID ? <div className="error">You're already signed in!</div>
+    : <><h1 className="title">cont<b><i>x</i></b></h1>{loginForm}</>
   );
 }
 
